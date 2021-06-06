@@ -13,5 +13,10 @@ class NoteController extends Controller
 {
     use AuthenticatesUsers;
 
-    
+    public function index()
+    {        
+        $notes = Note::all();
+       
+        return view('notes.index', ['notes'=>$notes]);
+    }
 }
