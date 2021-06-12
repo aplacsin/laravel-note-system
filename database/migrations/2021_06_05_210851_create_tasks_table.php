@@ -18,7 +18,7 @@ class CreateTasksTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->text('title')->nullable();
             $table->integer('priority');
-            $table->string('status')->default('todo');           
+            $table->string('status')->default('ToDo');
             $table->timestamps();
         });
 

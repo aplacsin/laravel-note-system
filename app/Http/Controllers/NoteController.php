@@ -15,8 +15,17 @@ class NoteController extends Controller
 
     public function index()
     {        
-        $notes = Note::all();
+        $userId = auth()->user()->id;
+        
+        $notes = Note::query()
+        ->where('user_id', $userId)
+        ->get();       
        
         return view('notes.index', ['notes'=>$notes]);
+    }
+
+    public function create()
+    {
+        return view('notes.create');
     }
 }
