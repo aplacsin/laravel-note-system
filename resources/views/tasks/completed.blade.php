@@ -29,21 +29,22 @@
                     <table class="table table-stripped">
                         <tbody>
                             <tr>
-                                 <td><b>Action</b></td>
-                                <td><b>Title</b></i></td>
-                                <td><b>Priority</b></td>
-                                <td><b>Status</b></td>
-                                <td><b>Completed Date</b></td>
+                                <td><b>{{ __('func.action') }}</b></td>
+                            <td><b>{{ __('func.title') }}</b></i></td>
+                            <td><b>{{ __('func.priority') }}</b></td>
+                            <td><b>{{ __('func.status') }}</b></td>
+                            <td><b>{{ __('func.completed_at') }}</b></td>
                             </tr>
                             @foreach($tasks as $task)
                             <tr>
                                 <td>
-                                        <Form method="POST" action="{{ route('tasks.destroyCompleted', $task->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button class="button-action"><i class="fa fa-trash icons icons-delete"
-                                    aria-hidden="true"></i></button>
-                                </Form>
+                                    <Form method="POST"
+                                        action="{{ route('tasks.destroyCompleted', [$task->id]) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="button-action"><i class="fa fa-trash icons icons-delete"
+                                                aria-hidden="true"></i></button>
+                                    </Form>
                                 </td>
                                 <td>{{ $task->title }}</td>
                                 <td>{{ $task->priority }}</td>

@@ -62,7 +62,7 @@ class TaskController extends Controller
         Task::create($task);
 
         // Redirect to index
-       return redirect()->route('tasks.index')
+       return redirect()->route('tasks.index', app()->getLocale())
                         ->with('success','• The task has been successfully created.');
     }
 
@@ -71,13 +71,14 @@ class TaskController extends Controller
         Task::findorfail($id)->delete();
 
         // Redirect to index
-        return redirect()->route('tasks.index')
+        return redirect()->back()
                          ->with('success','• The task was successfully deleted.');
     }
 
     public function getCompleted($id)
-    {
-        $task = Task::where('id', $id)->first();
+    {        
+        $id = \Request::segment(3);        
+        $task = Task::where('id', $id)->first();        
         $user_id = $task->user_id;
         $title = $task->title;
         $priority = $task->priority;
@@ -95,7 +96,7 @@ class TaskController extends Controller
         $completed->save();
 
         // Redirect to index
-        return redirect()->route('tasks.index')
+        return redirect()->route('tasks.index', app()->getLocale())
                          ->with('success','• Task has been completed successfully.');
     }
 
@@ -111,11 +112,12 @@ class TaskController extends Controller
     }
 
     public function destroyCompleted($id)
-    {
+    {        
+        $id = \Request::segment(3);
         Completed::findorfail($id)->delete();
 
         // Redirect to index
-        return redirect()->route('tasks.completed')
+        return redirect()->back()
                          ->with('success','• Successfully deleted.');
     }
 }

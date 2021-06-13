@@ -27,36 +27,39 @@
                 <div class="wrapper-tasks">
 
                     <div class="wrapper-button">
-                        <a href="{{ route('tasks.create') }}" class="btn btn-success">Add Task</a>
+                        <a href="{{ route('tasks.create', app()->getLocale()) }}" class="btn btn-success">{{ __('func.add_task') }}</a>
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse"
                             aria-expanded="false" aria-controls="collapse">
-                            Filter
+                            {{ __('func.filter') }}
                         </button>
                     </div>
-                    <Form method="get" action="{{ route('tasks.index') }}">
+                    <Form method="get" action="{{ route('tasks.index', app()->getLocale()) }}">
                         @csrf
                         <div class="collapse" id="collapse">
                             <div class="form-group">
-                                <input class="form-control" name="title" value="{{ old('title') }}" placeholder="Title Search..."><br>
-                                <select name="priority" class="form-control">
-                                    <option disabled selected>Selected Priority</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                                <select name="sort" class="form-control">  
-                                    <option disabled selected>Selected Sort</option>                                 
-                                    <option value="priority">Priority</option>
-                                    <option value="created_at">Created Task</option>
-                                </select>
-                                <select name="method_sort" class="form-control">                                                                   
-                                    <option value="asc" selected>Ascending</option>
-                                    <option value="desc">Descending</option>
-                                </select>
+                                <input class="form-control" name="title" value="{{ old('title') }}"
+                                    placeholder="{{ __('func.title_serch') }}"><br>
+                                <div class="selected-wrapper">
+                                    <select name="priority" class="form-control">
+                                        <option disabled selected>{{ __('func.select_priority') }}</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                    <select name="sort" class="form-control">
+                                        <option disabled selected>{{ __('func.select_sort') }}</option>
+                                        <option value="priority">{{ __('func.priority') }}</option>
+                                        <option value="created_at">{{ __('func.created_at') }}</option>
+                                    </select>
+                                    <select name="method_sort" class="form-control">
+                                        <option value="asc" selected>{{ __('func.asc') }}</option>
+                                        <option value="desc">{{ __('func.desc') }}</option>
+                                    </select>
+                                </div>
                                 <div class="pull-center">
-                                    <button class="btn btn-primary">Filtered</button>
+                                    <button class="btn btn-primary">{{ __('func.filtered') }}</button>
                                 </div>
                             </div>
                     </Form>
@@ -65,23 +68,24 @@
                 <table class="table table-stripped">
                     <tbody>
                         <tr>
-                            <td><b>Action</b></td>
-                            <td><b>Title</b></i></td>
-                            <td><b>Priority</b></td>
-                            <td><b>Status</b></td>
-                            <td><b>Create Date</b></td>
+                            <td><b>{{ __('func.action') }}</b></td>
+                            <td><b>{{ __('func.title') }}</b></i></td>
+                            <td><b>{{ __('func.priority') }}</b></td>
+                            <td><b>{{ __('func.status') }}</b></td>
+                            <td><b>{{ __('func.created_at') }}</b></td>
                         </tr>
                         @foreach($tasks as $task)
                         <tr>
                             <td class="action-wp">
-                                <Form method="GET" action="{{ route('tasks.getCompleted', $task->id) }}">
+                                <Form method="GET" action="{{ route('tasks.getCompleted', [app()->getLocale(), $task->id]) }}">
                                     @csrf
                                     <button class="button-action"><i class="fa fa-check icons icons-complete"
                                             aria-hidden="true"></i></button>
                                 </Form>
-                                <Form method="POST" action="{{ route('tasks.destroy', $task->id) }}">
-                                    @csrf
+                                <Form method="POST" action="{{ route('tasks.destroy', [$task->id]) }}"> 
+                                                               
                                     @method('DELETE')
+                                    @csrf
                                     <button class="button-action"><i class="fa fa-trash icons icons-delete"
                                             aria-hidden="true"></i></button>
                                 </Form>

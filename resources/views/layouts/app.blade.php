@@ -32,23 +32,33 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="nav navbar-nav navbar-right ml-auto">                        
 
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        
+                        <!-- Localization Links -->
+                        @foreach (config('app.available_locales') as $locale)
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), $locale) }}" 
+                                @if (app()->getLocale() == $locale) style="font-weight: bold; text-decoration: underline" @endif>{{ strtoupper($locale) }}</a>
+                        </li>
+                        @endforeach   
+
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link link-header" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link link-header" href="{{ route('login', app()->getLocale()) }}">{{ __('auth.Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link link-header" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link link-header" href="{{ route('register', app()->getLocale()) }}">{{ __('auth.Register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -58,13 +68,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="{{ route('logout', app()->getLocale()) }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logout', app()->getLocale()) }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>

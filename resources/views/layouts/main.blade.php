@@ -15,7 +15,7 @@
     <script src="{{ asset('js/main.js') }}" defer></script>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>       
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -41,20 +41,27 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right ml-auto">
-                        <li><a class="link-nav" href="#">En</a></li>
+                        @foreach (config('app.available_locales') as $locale)
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), $locale) }}" 
+                                @if (app()->getLocale() == $locale) style="font-weight: bold; text-decoration: underline" @endif>{{ strtoupper($locale) }}</a>
+                        </li>
+                        @endforeach                        
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle link-nav" data-toggle="dropdown" role="button"
                                 aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->name }} <span
                                     class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Settings</a></li>                               
-                                <li><a href="#">Help</a></li>
+                                <li><a href="#">{{ __('navbar.settings') }}</a></li>
+                                <li><a href="#">{{ __('navbar.help') }}</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <li><a href="{{ route('logout', app()->getLocale()) }}" onclick="event.preventDefault();
                                       document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('navbar.logout') }}
                                     </a></li>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout', app()->getLocale()) }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
                             </ul>
@@ -76,7 +83,7 @@
                     <div class="brand-wrapper">
                         <!-- Brand -->
                         <div class="brand-name-wrapper">
-                            <a class="navbar-brand" href="{{ url('/') }}">
+                            <a class="navbar-brand link-nav" href="{{ route('home', app()->getLocale()) }}">
                                 {{ config('app.name', 'Laravel') }}
                             </a>
                         </div>
@@ -86,23 +93,33 @@
                 <!-- Main Menu -->
                 <div class="side-menu-container">
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ route('home') }}"><i class="fa fa-home"></i> Home page</a></li>
-                        <li class="active"><a href="{{ route('notes.index') }}"><i class="fa fa-sticky-note"></i> My
-                                Notes</a></li>
+                        <li class="{{ Route::is('home') ? 'active' : '' }}"><a class="link-nav"
+                                href="{{ route('home', app()->getLocale()) }}"><i class="fa fa-home"></i>
+                                {{ __('navbar.home_page') }}</a></li>
+                        <li class="{{ Route::is('notes.index') ? 'active' : '' }}"><a class="link-nav"
+                                href="{{ route('notes.index', app()->getLocale()) }}"><i class="fa fa-sticky-note"></i>
+                                {{ __('navbar.my_note') }}</a></li>
                         <!-- Dropdown-->
-                        <li class="panel panel-default" id="dropdown">
-                            <a data-toggle="collapse" href="#dropdown-lvl1">
-                                <i class="fa fa-list"></i> My Tasks
+                        <li class="panel panel-default {{ Route::is('tasks.index', 'tasks.completed') ? 'active' : '' }}"
+                            id="dropdown">
+                            <a class="link-nav" data-toggle="collapse" href="#dropdown-lvl1">
+                                <i class="fa fa-list"></i> {{ __('navbar.my_task') }}
                                 <span class="caret"></span>
                             </a>
                             <!-- Dropdown level 1 -->
-                            <div id="dropdown-lvl1" class="panel-collapse collapse">
+                            <div id="dropdown-lvl1"
+                                class="panel-collapse collapse {{ Route::is('tasks.index', 'tasks.completed') ? 'in show' : '' }}">
                                 <div class="panel-body">
                                     <ul class="nav navbar-nav">
-                                        <li><a href="{{ route('tasks.index') }}"><i class="fa fa-refresh"></i>
-                                                Active</a></li>
-                                        <li><a href="{{ route('tasks.completed') }}"><i class="fa fa-check"></i>
-                                                Completed</a></li>
+                                        <li class="{{ Route::is('tasks.index') ? 'active' : '' }}"><a class="link-nav"
+                                                href="{{ route('tasks.index', app()->getLocale()) }}"><i
+                                                    class="fa fa-refresh"></i>
+                                                {{ __('navbar.active_task') }}</a></li>
+                                        <li class="{{ Route::is('tasks.completed') ? 'active' : '' }}"><a
+                                                class="link-nav"
+                                                href="{{ route('tasks.completed', app()->getLocale()) }}"><i
+                                                    class="fa fa-check"></i>
+                                                {{ __('navbar.completed_task') }}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -111,7 +128,6 @@
                 </div><!-- /.navbar-collapse -->
             </nav>
         </div>
-
         <main class="py-4">
             @yield('content')
         </main>

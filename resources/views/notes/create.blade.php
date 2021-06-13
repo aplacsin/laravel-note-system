@@ -9,7 +9,7 @@
                 <div class="create-wrapper">
                     <h3>Create Note</h3>
                     <div class="pull-right">
-                        <a class="btn btn-primary" href="{{ route('notes.index') }}">Back</a>
+                        <a class="btn btn-primary" href="{{ route('notes.index', app()->getLocale()) }}">Back</a>
                     </div>
                     <Form method="post" action="{{ route('notes.store') }}">
                         @csrf

@@ -23,6 +23,10 @@ body {
     }
 }
 
+.active-lang {
+    color: red;
+}
+
 .navbar-toggle {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -381,8 +385,13 @@ body.msb-x {
     }
 }
 
-.form-control {
-    margin-bottom: 10px;
+.selected-wrapper {
+    display: flex; 
+    margin-bottom: 15px;   
+   
+    .form-control:not(:last-child) {
+        margin-right: 10px;
+    }
 }
 
 

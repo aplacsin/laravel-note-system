@@ -275,8 +275,12 @@ body.msb-x .msb {
   width: 100%;
 }
 
-.form-control {
-  margin-bottom: 10px;
+.selected-wrapper {
+  display: flex;
+  margin-bottom: 15px;
+}
+.selected-wrapper .form-control:not(:last-child) {
+  margin-right: 10px;
 }
 
 /* Create Page */

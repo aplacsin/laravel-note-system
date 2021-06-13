@@ -8,7 +8,7 @@
             <div class="col-md-12 cards-center">
                 <div class="cards-wrapper">
                     <div class="cards-header">
-                        Create Task
+                        {{ __('func.add_task') }}
                     </div>
                     @if ($errors->any())
                     <div class="alert alert-danger">
@@ -20,15 +20,15 @@
                     </div>
                     @endif
                     <div class="pull-right">
-                        <a class="btn btn-primary" href="{{ route('tasks.index') }}">Back</a>
+                        <a class="btn btn-primary" href="{{ route('tasks.index', app()->getLocale()) }}">{{ __('func.back') }}</a>
                     </div>
-                    <Form method="post" action="{{ route('tasks.store') }}">
+                    <Form method="post" action="{{ route('tasks.store', app()->getLocale()) }}">
                         @csrf
                         <div class="form-group">
                             <input type="text" class="form-control" name="title" value="{{ old('title') }}"
-                                placeholder="Enter the title"><br>
+                                placeholder="{{ __('func.enter_title') }}"><br>
                             <select name="priority" class="form-control">
-                                <option selected>Select Priority</option>
+                                <option selected>{{ __('func.select_priority') }}</option>
                                 <option name="priority" value="1">1</option>
                                 <option name="priority" value="2">2</option>
                                 <option name="priority" value="3">3</option>
@@ -36,7 +36,7 @@
                                 <option name="priority" value="5">5</option>
                             </select>
                             <div class="pull-center">
-                                <button class="btn btn-success btn-create">Create</button>
+                                <button class="btn btn-success btn-create">{{ __('func.create') }}</button>
                             </div>
                         </div>
                     </Form>

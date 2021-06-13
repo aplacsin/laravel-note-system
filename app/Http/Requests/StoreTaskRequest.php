@@ -25,7 +25,7 @@ class StoreTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'max:80'],
+            'title' => ['required', 'max:150'],
             'priority' => ['required',Rule::in(['1', '2','3','4','5'])],
         ];
     }
