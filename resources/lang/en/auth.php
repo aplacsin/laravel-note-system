@@ -17,7 +17,15 @@ return [
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
-    'Login' => 'Login',
-    'Register' => 'Register',
+    'login' => 'Login',
+    'register' => 'Register',
+    'email_address' => 'E-Mail Address',
+    'remember_me' => 'Remember Me',
+    'forgot_your_password?' => 'Forgot Your Password?',
+    'password' => 'Password',
+    'name' => 'Name',
+    'reset_password' => 'Reset Password',
+    'confirm_password' => 'Confirm Password',
+    'send_password_reset_link' => 'Send Password Reset Link',
 
 ];

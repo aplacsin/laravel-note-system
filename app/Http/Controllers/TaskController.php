@@ -43,7 +43,7 @@ class TaskController extends Controller
             $tasks->orderBy("{$sort}", "{$method}");
         }
 
-        $tasks = $tasks->get();
+        $tasks = $tasks->orderBy('created_at', 'DESC')->get();
        
         return view('tasks.index', compact('tasks'));        
     }
@@ -63,7 +63,7 @@ class TaskController extends Controller
 
         // Redirect to index
        return redirect()->route('tasks.index', app()->getLocale())
-                        ->with('success','• The task has been successfully created.');
+                        ->with('success', trans('alert.success_created_task'));
     }
 
     public function destroy($id) 
@@ -72,7 +72,7 @@ class TaskController extends Controller
 
         // Redirect to index
         return redirect()->back()
-                         ->with('success','• The task was successfully deleted.');
+                         ->with('success', trans('alert.success_delete_task'));
     }
 
     public function getCompleted($id)
@@ -97,7 +97,7 @@ class TaskController extends Controller
 
         // Redirect to index
         return redirect()->route('tasks.index', app()->getLocale())
-                         ->with('success','• Task has been completed successfully.');
+                         ->with('success', trans('alert.success_complete_task'));
     }
 
     public function completed()
@@ -106,18 +106,18 @@ class TaskController extends Controller
 
         $tasks = Completed::query()
         ->where('user_id', $userId)
-        ->get();
+        ->orderBy('updated_at', 'DESC')
+        ->paginate(15);
        
         return view('tasks.completed', compact('tasks'));
     }
 
     public function destroyCompleted($id)
-    {        
-        $id = \Request::segment(3);
+    {      
         Completed::findorfail($id)->delete();
 
         // Redirect to index
         return redirect()->back()
-                         ->with('success','• Successfully deleted.');
+                         ->with('success', trans('alert.success_deleted'));
     }
 }

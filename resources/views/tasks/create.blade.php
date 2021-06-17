@@ -10,17 +10,11 @@
                     <div class="cards-header">
                         {{ __('func.add_task') }}
                     </div>
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
+                    <!--Message alerts-->
+                    @include('layouts.flash-message')
                     <div class="pull-right">
-                        <a class="btn btn-primary" href="{{ route('tasks.index', app()->getLocale()) }}">{{ __('func.back') }}</a>
+                        <a class="btn btn-primary"
+                            href="{{ route('tasks.index', app()->getLocale()) }}">{{ __('func.back') }}</a>
                     </div>
                     <Form method="post" action="{{ route('tasks.store', app()->getLocale()) }}">
                         @csrf

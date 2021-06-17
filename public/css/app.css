@@ -9,7 +9,12 @@ body {
   font-size: 14px;
   letter-spacing: 0.01em;
   color: #39464e;
-  overflow-x: hidden;
+}
+
+body.preload * {
+  animation-duration: 0s !important;
+  -webkit-animation-duration: 0s !important;
+  transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
 }
 
 .navbar-default {
@@ -25,9 +30,21 @@ body {
   color: black;
 }
 
+.brand-visibility {
+  display: none;
+}
+
+.active-lang {
+  color: red;
+}
+
 .navbar-toggle {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.link-visibility {
+  display: none !important;
 }
 
 /*main side bar*/
@@ -55,6 +72,10 @@ body {
   border-bottom: 1px solid #e7e7e7;
   margin-bottom: 20px;
   background: #fff;
+}
+.msb .navbar-header .brand-wrapper {
+  display: flex;
+  justify-content: center;
 }
 .msb .navbar-nav .panel {
   border: 0 none;
@@ -104,7 +125,6 @@ ul.ns {
   color: #444;
   padding: 10px 25px;
   display: block;
-  vertical-align: middle;
 }
 .nv li a .ic {
   font-size: 16px;
@@ -122,12 +142,23 @@ ul.ns {
   position: relative;
   min-height: 100%;
   /*content view*/
+  /*  .cv {} */
 }
+
 /*globals*/
 a,
 a:focus,
 a:hover {
   text-decoration: none;
+  transition: 0.4s !important;
+}
+
+button,
+button:active,
+button:focus,
+button:hover {
+  transition: 0.4s !important;
+  outline: none !important;
 }
 
 .inbox .container-fluid {
@@ -238,6 +269,46 @@ body.msb-x .msb {
     margin-left: 0;
   }
 }
+/* Tables */
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 0.35em;
+}
+
+table th,
+table td {
+  padding: 0.625em;
+  text-align: center;
+  word-wrap: break-word;
+  width: auto;
+}
+table th p,
+table td p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+table th {
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.table-title {
+  text-align: left;
+}
+
 /* Task Page */
 .icons {
   font-size: 20px;
@@ -256,23 +327,14 @@ body.msb-x .msb {
   border: none !important;
   font-size: 0;
   margin-right: 5px;
-  float: left;
 }
 
-.wrapper-button {
+.wrapper-tasks {
+  width: 100%;
+}
+.wrapper-tasks .wrapper-button {
   padding-top: 25px;
   padding-bottom: 25px;
-}
-.wrapper-button .btn, .wrapper-button .btn.focus, .wrapper-button .btn:active.focus, .wrapper-button .btn:active:focus, .wrapper-button .btn:focus {
-  outline: none;
-}
-
-.content-center {
-  display: flex;
-  justify-content: center;
-}
-.content-center .wrapper-tasks {
-  width: 100%;
 }
 
 .selected-wrapper {
@@ -319,4 +381,148 @@ body.msb-x .msb {
   padding: 8px;
   margin-bottom: 10px;
   font-size: 15px;
+}
+.cards-center .cards-create-note {
+  width: 1000px;
+}
+
+.action-wp {
+  display: flex;
+  justify-content: center;
+}
+
+.completed-table {
+  margin-top: 20px;
+}
+
+/* Show Page */
+.form-group-show {
+  margin-top: 55px;
+}
+
+.wrapper-title {
+  margin-bottom: 20px;
+}
+
+.wrapper-content,
+.wrapper-title {
+  word-wrap: break-word;
+}
+
+.add-create-field,
+.add-edit-field {
+  margin-bottom: 10px;
+}
+
+.wrapper-image-main {
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+.image-main img {
+  width: 100%;
+}
+
+.wrapper-img {
+  display: flex;
+}
+.wrapper-img .wrapper-image-show {
+  width: 200px;
+  margin-right: 10px;
+}
+.wrapper-img .wrapper-image-show .image-show img {
+  width: 100%;
+  height: 200px;
+}
+
+/* Adaptive */
+@media screen and (max-width: 767px) {
+  .navbar-header {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .navbar-header .brand-visibility {
+    display: inline-block;
+    margin-right: auto;
+  }
+
+  .cards-create-note {
+    width: 100% !important;
+  }
+
+  .link-visibility {
+    display: list-item !important;
+  }
+
+  .nav-adaptive {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .action-wp {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  #msbo {
+    display: none;
+  }
+
+  .msb {
+    display: none;
+  }
+
+  body .mcw,
+body .mnb {
+    margin-left: 0;
+    -webkit-animation: bodyslideout 300ms forwards;
+    animation: bodyslideout 300ms forwards;
+    transform-style: preserve-3d;
+  }
+
+  table {
+    border: 0;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: 0.625em;
+  }
+
+  table td,
+.table-title {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 15px;
+    text-align: right;
+    word-wrap: break-word;
+  }
+
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 15px;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
 }

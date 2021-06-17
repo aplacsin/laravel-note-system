@@ -10,12 +10,18 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
+    <!-- Scripts -->    
+    <script src="https://cdn.tiny.cloud/1/k3hpsqyq7bdu9tzvo6bsl0c8zig9qhpzxwntl6lllolbl1is/tinymce/5/tinymce.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>     
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/main.js') }}" defer></script>
-
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/create_image.js') }}" defer></script>
+    <script>
+        tinymce.init({
+            selector: '#editor',
+            plugins: 'code, image'
+        });
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -25,7 +31,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body>
+<body class="preload">
     <div id="app">
         <nav class="mnb navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
@@ -38,16 +44,57 @@
                     <div style="padding: 15px 0;">
                         <a href="#" id="msbo"><i class="ic fa fa-bars"></i></a>
                     </div>
+                    <div class="brand-wrapper brand-visibility">
+                        <!-- Brand -->
+                        <div class="brand-name-wrapper">
+                            <a class="navbar-brand link-nav" href="{{ route('home', app()->getLocale()) }}">
+                                {{ config('app.name', 'Laravel') }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
+        
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right ml-auto">
-                        @foreach (config('app.available_locales') as $locale)
-                        <li class="nav-item">
-                            <a class="nav-link"
-                                href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), $locale) }}" 
-                                @if (app()->getLocale() == $locale) style="font-weight: bold; text-decoration: underline" @endif>{{ strtoupper($locale) }}</a>
+                        @foreach ($currentRoute as $qwe)                    
+                        <li class="nav-item">                        
+                            <a class="link-nav"
+                                href="{{ $qwe['url'] }}"                                 
+                                @if (app()->getLocale() === $qwe['locale']) style="font-weight: bold;
+                                text-decoration:underline" @endif>{{ strtoupper($qwe['locale']) }}</a>
                         </li>
                         @endforeach                        
+                        <li class="{{ Route::is('home') ? 'active' : '' }} link-visibility"><a class="link-nav"
+                                href="{{ route('home', app()->getLocale()) }}"><i class="fa fa-home"></i>
+                                {{ __('navbar.home_page') }}</a></li>
+                        <li class="{{ Route::is('notes.index') ? 'active' : '' }} link-visibility"><a class="link-nav"
+                                href="{{ route('notes.index', app()->getLocale()) }}"><i class="fa fa-sticky-note"></i>
+                                {{ __('navbar.my_note') }}</a></li>
+                        <!-- Dropdown-->
+                        <li class="dropdown link-visibility {{ Route::is('tasks.index', 'tasks.completed') ? 'active' : '' }}"
+                            id="dropdown">
+                            <a class="link-nav" data-toggle="collapse" href="#dropdown-lvl1">
+                                <i class="fa fa-list"></i> {{ __('navbar.my_task') }}
+                                <span class="caret"></span>
+                            </a>
+                            <!-- Dropdown level 1 -->
+                            <div id="dropdown-lvl1"
+                                class="panel-collapse collapse {{ Route::is('tasks.index', 'tasks.completed') ? 'in show' : '' }}">
+                                <div class="">
+                                    <ul class="nav navbar-nav nav-adaptive">
+                                        <li class="{{ Route::is('tasks.index') ? 'active' : '' }}"><a class="link-nav"
+                                                href="{{ route('tasks.index', app()->getLocale()) }}"><i
+                                                    class="fa fa-refresh"></i>
+                                                {{ __('navbar.active_task') }}</a></li>
+                                        <li class="{{ Route::is('tasks.completed') ? 'active' : '' }}"><a
+                                                class="link-nav"
+                                                href="{{ route('tasks.completed', app()->getLocale()) }}"><i
+                                                    class="fa fa-check"></i>
+                                                {{ __('navbar.completed_task') }}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle link-nav" data-toggle="dropdown" role="button"
                                 aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->name }} <span
@@ -66,8 +113,8 @@
                                 </form>
                             </ul>
                         </li>
-                        <li><a class="link-nav" href="#"><i class="fa fa-bell-o"></i></a></li>
-                        <li><a class="link-nav" href="#"><i class="fa fa-comment-o"></i></a></li>
+                        {{-- <li><a class="link-nav" href="#"><i class="fa fa-bell-o"></i></a></li>
+                        <li><a class="link-nav" href="#"><i class="fa fa-comment-o"></i></a></li> --}}
                     </ul>
                     {{-- <form class="navbar-form navbar-right">
                         <input type="text" class="form-control" placeholder="Search...">

@@ -4,52 +4,42 @@
 
 <!--main content wrapper-->
 <div class="mcw">
-
-    <!-- Message success -->
-    @if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ $message }}</p>
-    </div>
-    @endif
-
-    <!-- Message errors -->
-    @if ($message = Session::get('errors'))
-    <div class="alert alert-danger">
-        <p>{{ $message }}</p>
-    </div>
-    @endif
+    <!--Message alerts-->
+    @include('layouts.flash-message')
     <!--navigation here-->
     <!--main content view-->
     <div class="container">
         <div class="row">
-            <div class="col-md-12 content-center">
+            <div class="col-md-12">
 
-                <div class="wrapper-tasks">
+                <div class="wrapper-tasks completed-table">
 
-                    <table class="table table-stripped">
-                        <tbody>
+                    <table class="">
+                        <thead>
                             <tr>
-                                <td><b>{{ __('func.action') }}</b></td>
-                            <td><b>{{ __('func.title') }}</b></i></td>
-                            <td><b>{{ __('func.priority') }}</b></td>
-                            <td><b>{{ __('func.status') }}</b></td>
-                            <td><b>{{ __('func.completed_at') }}</b></td>
+                                <th scope="col"><b>{{ __('func.action') }}</b></th>
+                                <th scope="col"><b>{{ __('func.title_task') }}</b></th>
+                                <th scope="col"><b>{{ __('func.priority') }}</b></th>
+                                <th scope="col"><b>{{ __('func.status') }}</b></th>
+                                <th scope="col"><b>{{ __('func.completed_at') }}</b></th>
                             </tr>
+                        </thead>
+                        <tbody>
                             @foreach($tasks as $task)
                             <tr>
-                                <td>
-                                    <Form method="POST"
-                                        action="{{ route('tasks.destroyCompleted', [$task->id]) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="button-action"><i class="fa fa-trash icons icons-delete"
-                                                aria-hidden="true"></i></button>
-                                    </Form>
+                                <td data-label="{{ __('func.action') }}">
+                                    <div class="action-wp">
+                                        <Form method="POST" action="{{ route('tasks.destroyCompleted', [app()->getLocale(), $task->id]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="button-action"><i class="fa fa-trash icons icons-delete"
+                                                    aria-hidden="true"></i></button>
+                                        </Form>
                                 </td>
-                                <td>{{ $task->title }}</td>
-                                <td>{{ $task->priority }}</td>
-                                <td>{{ $task->status }}</td>
-                                <td>{{ $task->completed_at }}</td>
+                                <td class="table-title" data-label="{{ __('func.title_task') }}">{{ $task->title }}</td>
+                                <td data-label="{{ __('func.priority') }}">{{ $task->priority }}</td>
+                                <td data-label="{{ __('func.status') }}">{{ $task->status }}</td>
+                                <td data-label="{{ __('func.completed_at') }}">{{ $task->completed_at }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -57,6 +47,7 @@
                 </div>
             </div>
         </div>
+        {{ $tasks->links() }}
     </div>
 </div>
 

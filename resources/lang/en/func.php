@@ -14,10 +14,23 @@ return [
     'desc' => 'Descending',
     'filtered' => 'Filtered',
     'action' => 'Action',
-    'title' => 'Title',    
+    'title_task' => 'Task name',
     'status' => 'Status',
     'completed_at' => 'Date Completed',
     'enter_title' => 'Enter Title',
     'create' => 'Create',
-    'back' => 'Back',    
+    'back' => 'Back',
+
+    'add_notes' => 'Create Note',
+    'title_note' => 'Title',
+    'content_note' => 'Content',
+    'enter_content' => 'Enter Content',
+    'files' => 'Files',
+
+    'save' => 'Save',
+    'edit_notes' => 'Edit Note',
+    'show_notes' => 'Show Note',
+
+    'image' => 'Image',
+   
 ];

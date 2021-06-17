@@ -5,29 +5,17 @@
 
 <!--main content wrapper-->
 <div class="mcw">
-    <!-- Message success -->
-    @if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ $message }}</p>
-    </div>
-    @endif
-
-    <!-- Message errors -->
-    @if ($message = Session::get('errors'))
-    <div class="alert alert-danger">
-        <p>{{ $message }}</p>
-    </div>
-    @endif
+    <!--Message alerts-->
+    @include('layouts.flash-message')
     <!--navigation here-->
     <!--main content view-->
     <div class="container">
         <div class="row">
-            <div class="col-md-12 content-center">
-
+            <div class="col-md-12">
                 <div class="wrapper-tasks">
-
                     <div class="wrapper-button">
-                        <a href="{{ route('tasks.create', app()->getLocale()) }}" class="btn btn-success">{{ __('func.add_task') }}</a>
+                        <a href="{{ route('tasks.create', app()->getLocale()) }}"
+                            class="btn btn-success">{{ __('func.add_task') }}</a>
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse"
                             aria-expanded="false" aria-controls="collapse">
                             {{ __('func.filter') }}
@@ -64,42 +52,47 @@
                             </div>
                     </Form>
                 </div>
-
-                <table class="table table-stripped">
-                    <tbody>
+                <table>
+                    <thead>
                         <tr>
-                            <td><b>{{ __('func.action') }}</b></td>
-                            <td><b>{{ __('func.title') }}</b></i></td>
-                            <td><b>{{ __('func.priority') }}</b></td>
-                            <td><b>{{ __('func.status') }}</b></td>
-                            <td><b>{{ __('func.created_at') }}</b></td>
+                            <th scope="col"><b>{{ __('func.action') }}</b></th>
+                            <th scope="col"><b>{{ __('func.title_task') }}</b></th>
+                            <th scope="col"><b>{{ __('func.priority') }}</b></th>
+                            <th scope="col"><b>{{ __('func.status') }}</b></th>
+                            <th scope="col"><b>{{ __('func.created_at') }}</b></th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @foreach($tasks as $task)
                         <tr>
-                            <td class="action-wp">
-                                <Form method="GET" action="{{ route('tasks.getCompleted', [app()->getLocale(), $task->id]) }}">
-                                    @csrf
-                                    <button class="button-action"><i class="fa fa-check icons icons-complete"
-                                            aria-hidden="true"></i></button>
-                                </Form>
-                                <Form method="POST" action="{{ route('tasks.destroy', [$task->id]) }}"> 
-                                                               
-                                    @method('DELETE')
-                                    @csrf
-                                    <button class="button-action"><i class="fa fa-trash icons icons-delete"
-                                            aria-hidden="true"></i></button>
-                                </Form>
+                            <td data-label="{{ __('func.action') }}">
+                                <div class="action-wp">
+                                    <Form method="GET"
+                                        action="{{ route('tasks.getCompleted', [app()->getLocale(), $task->id]) }}">
+                                        @csrf
+                                        <button class="button-action flex-column"><i
+                                                class="fa fa-check icons icons-complete"
+                                                aria-hidden="true"></i></button>
+                                    </Form>
+                                    <Form method="POST" action="{{ route('tasks.destroy', [app()->getLocale(), $task->id]) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="button-action flex-column"><i
+                                                class="fa fa-trash icons icons-delete" aria-hidden="true"></i></button>
+                                    </Form>
+                                </div>
                             </td>
-                            <td>{{ $task->title }}</td>
-                            <td>{{ $task->priority }}</td>
-                            <td>{{ $task->status }}</td>
-                            <td>{{ $task->created_at }}</td>
+                            <td class="table-title" data-label="{{ __('func.title_task') }}">{{ $task->title }}</td>
+                            <td data-label="{{ __('func.priority') }}">{{ $task->priority }}</td>
+                            <td data-label="{{ __('func.status') }}">{{ $task->status }}</td>
+                            <td data-label="{{ __('func.created_at') }}">{{ $task->created_at }}</td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
+      {{--   {{ $tasks->links() }} --}}
     </div>
 </div>
 </div>
