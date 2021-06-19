@@ -20,37 +20,49 @@ class TaskController extends Controller
     use AuthenticatesUsers;
 
     public function index(FilterTaskRequest $request)
-    {        
-        $title = $request->title;
-        $priority = $request->priority;
-        $sort = $request->sort;
-        $method = $request->method_sort;
+    {
+        if (Auth::check()) {  
+            $title = $request->title;
+            $priority = $request->priority;
+            $sort = $request->sort;
+            $method = $request->method_sort;
 
-        $userId = auth()->user()->id;
+            $userId = auth()->user()->id;
        
-        $tasks = Task::query()
-        ->where('user_id', $userId);       
+            $tasks = Task::query()
+            ->where('user_id', $userId);       
 
-        if ($request->has('title')) {
-             $tasks->where('title', 'like', "%{$title}%");
-        }
+            if ($request->has('title')) {
+                $tasks->where('title', 'like', "%{$title}%");
+            }
 
-        if ($request->get('priority')) {
-            $tasks->where('priority', $priority);            
-        }
+            if ($request->get('priority')) {
+                $tasks->where('priority', $priority);            
+            }
 
-        if ($request->get('sort')) {
-            $tasks->orderBy("{$sort}", "{$method}");
-        }
+            if ($request->get('sort')) {
+                $tasks->orderBy("{$sort}", "{$method}");
+            }
 
-        $tasks = $tasks->orderBy('created_at', 'DESC')->get();
+            $tasks = $tasks->orderBy('created_at', 'DESC')->get();
        
-        return view('tasks.index', compact('tasks'));        
+            return view('tasks.index', compact('tasks'));  
+        }
+        else
+        {
+            return redirect()->route('login', app()->getLocale());
+        }      
     }
 
     public function create()
     {
-        return view('tasks.create');
+        if (Auth::check()) {  
+            return view('tasks.create');
+        }
+        else
+        {
+            return redirect()->route('login', app()->getLocale());
+        }
     }
 
     public function store(StoreTaskRequest $request)
@@ -102,14 +114,20 @@ class TaskController extends Controller
 
     public function completed()
     {
-        $userId = auth()->user()->id;
+        if (Auth::check()) {  
+            $userId = auth()->user()->id;
 
-        $tasks = Completed::query()
-        ->where('user_id', $userId)
-        ->orderBy('updated_at', 'DESC')
-        ->paginate(15);
+            $tasks = Completed::query()
+            ->where('user_id', $userId)
+            ->orderBy('updated_at', 'DESC')
+            ->paginate(15);
        
-        return view('tasks.completed', compact('tasks'));
+            return view('tasks.completed', compact('tasks'));
+        }
+        else
+        {
+            return redirect()->route('login', app()->getLocale());
+        }
     }
 
     public function destroyCompleted($id)

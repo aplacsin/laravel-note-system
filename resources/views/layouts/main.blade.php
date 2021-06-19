@@ -15,7 +15,10 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>     
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/main.js') }}" defer></script>
-    <script src="{{ asset('js/create_image.js') }}" defer></script>
+    <script src="{{ asset('js/create_add_input.js') }}" defer></script>
+    <script src="{{ asset('js/edit_file.js') }}" defer></script>
+    <script src="{{ asset('js/edit_image.js') }}" defer></script>
+   
     <script>
         tinymce.init({
             selector: '#editor',
@@ -56,12 +59,12 @@
         
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right ml-auto">
-                        @foreach ($currentRoute as $qwe)                    
+                        @foreach ($currentRoute as $nameURL)                    
                         <li class="nav-item">                        
                             <a class="link-nav"
-                                href="{{ $qwe['url'] }}"                                 
-                                @if (app()->getLocale() === $qwe['locale']) style="font-weight: bold;
-                                text-decoration:underline" @endif>{{ strtoupper($qwe['locale']) }}</a>
+                                href="{{ $nameURL['url'] }}"                                 
+                                @if (app()->getLocale() === $nameURL['locale']) style="font-weight: bold;
+                                text-decoration:underline" @endif>{{ strtoupper($nameURL['locale']) }}</a>
                         </li>
                         @endforeach                        
                         <li class="{{ Route::is('home') ? 'active' : '' }} link-visibility"><a class="link-nav"

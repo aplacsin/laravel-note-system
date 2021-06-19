@@ -13,6 +13,9 @@ body.preload * {
     transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
 }
 
+
+/* Navbar */
+
 .navbar-default {
     background-color: #FFF;
     margin-left: 200px;
@@ -484,6 +487,7 @@ table th {
         padding-left: 15px;
         padding-right: 15px;
         padding-bottom: 10px;
+        margin-bottom: 15px;
 
         .cards-header {
             size: 10px;
@@ -523,9 +527,35 @@ table th {
     word-wrap: break-word;
 }
 
+.wrapper-content {
+    border-bottom: 1px solid #ddd;
+}
+
+.file-link {
+    color: black;
+}
+
+/* Edit Page */
+
 .add-create-field,
 .add-edit-field {
     margin-bottom: 10px;
+}
+
+.add-file {
+    margin-bottom: 14px;
+    display: revert !important;
+}
+
+.delete {
+    margin-left: 5px;
+}
+
+.wrapper-not-alert {
+    justify-content: center;
+    display: flex;
+    margin-top: 100px;
+    font-size: 30px;
 }
 
 .wrapper-image-main {
@@ -534,28 +564,65 @@ table th {
 }
 
 .image-main img {
-    width: 100%;    
+    width: 100%;
+}
+
+.title-upload-image,
+.title-upload-file {
+    font-size: 20px;
+    margin-bottom: 15px;
 }
 
 .wrapper-img {
     display: flex;
+    flex-wrap: wrap;    
+    justify-content: center;
 
     .wrapper-image-show {
         width: 200px;
         margin-right: 10px;
+        margin-bottom: 10px;
 
         .image-show img {
             width: 100%;
             height: 200px;
         }
     }
+
+    .wrapper-image-edit {
+        width: 200px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+        .image-edit img {
+            width: 100%;
+            height: 200px;
+        }
+    }
+}
+
+.wrapper-file {
+
+    .wrapper-file-edit {
+        width: 200px;
+        margin-right: 10px;
+    }
+}
+
+.title-upload-image,
+.title-upload-file {
+    margin-top: 30px;
+}
+
+.btn-edit-delete {
+    text-align: center;
+    margin-top: 10px;
 }
 
 
 /* Adaptive */
 
 @media screen and (max-width: 767px) {
-
 
     .navbar-header {
         display: flex;
@@ -583,6 +650,32 @@ table th {
     .action-wp {
         display: flex;
         justify-content: flex-end;
+    }
+
+    .delete {
+        margin-left: 0px;
+        margin-bottom: 10px;
+    }
+
+    .wrapper-image-show {
+        margin-bottom: 15px;
+    }
+
+    .wrapper-img {
+        display: grid;
+        justify-content: center;
+    }
+
+    .wrapper-img,
+    .wrapper-image-edit {
+        width: 100% !important;
+        margin-right: 0px;
+        margin-bottom: 20px;
+
+        .image-edit img {
+            width: 100%;
+            height: 100% !important;
+        }
     }
 
     #msbo {

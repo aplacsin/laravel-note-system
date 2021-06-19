@@ -11,9 +11,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-
                 <div class="wrapper-tasks completed-table">
-
+                    @if (count($tasks) > 0)
                     <table class="">
                         <thead>
                             <tr>
@@ -32,7 +31,7 @@
                                         <Form method="POST" action="{{ route('tasks.destroyCompleted', [app()->getLocale(), $task->id]) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="button-action"><i class="fa fa-trash icons icons-delete"
+                                            <button onclick="return confirm('{{ __('func.confirm_delete') }}')" class="button-action"><i class="fa fa-trash icons icons-delete"
                                                     aria-hidden="true"></i></button>
                                         </Form>
                                 </td>
@@ -44,6 +43,11 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @else
+                <div class="wrapper-not-alert">
+                    {{ __('func.no_completed_tasks') }}
+                </div>
+                @endif
                 </div>
             </div>
         </div>

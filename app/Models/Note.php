@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Note extends Model
 {
@@ -21,4 +22,10 @@ class Note extends Model
     {
         return $this->hasMany(Image::class);
     }
+
+    public function file()
+    {
+        return $this->hasMany(File::class);
+    }
+    
 }

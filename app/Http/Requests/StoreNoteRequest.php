@@ -24,11 +24,12 @@ class StoreNoteRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'max:100'],
-            'content' => ['required', 'max:500'],
+            'title' => ['required', 'max:150'],
+            'content' => ['required'],
             'image[]' => ['nullable', 'mimes:jpg,jpeg,bmp,png', 'max:10000'],
-            'image.*' => ['nullable', 'mimes:jpg,jpeg,bmp,png', 'max:10000'],
-            'note_id' => ['nullable']
+            'image.*[]' => ['nullable', 'mimes:jpg,jpeg,bmp,png', 'max:10000'],  
+            'file[]' => ['nullable', 'mimes:txt,doc,docx,pdf'],
+            'file.*[]' => ['nullable', 'mimes:txt,doc,docx,pdf'],
         ];
     }
 }

@@ -21,6 +21,7 @@
                             {{ __('func.filter') }}
                         </button>
                     </div>
+                    @if (count($tasks) > 0)
                     <Form method="get" action="{{ route('tasks.index', app()->getLocale()) }}">
                         @csrf
                         <div class="collapse" id="collapse">
@@ -74,10 +75,11 @@
                                                 class="fa fa-check icons icons-complete"
                                                 aria-hidden="true"></i></button>
                                     </Form>
-                                    <Form method="POST" action="{{ route('tasks.destroy', [app()->getLocale(), $task->id]) }}">
+                                    <Form method="POST"
+                                        action="{{ route('tasks.destroy', [app()->getLocale(), $task->id]) }}">
                                         @method('DELETE')
                                         @csrf
-                                        <button class="button-action flex-column"><i
+                                        <button onclick="return confirm('{{ __('func.confirm_delete') }}')" class="button-action flex-column"><i
                                                 class="fa fa-trash icons icons-delete" aria-hidden="true"></i></button>
                                     </Form>
                                 </div>
@@ -90,9 +92,14 @@
                         @endforeach
                     </tbody>
                 </table>
+                @else
+                <div class="wrapper-not-alert">
+                    {{ __('func.no_tasks') }}
+                </div>
+                @endif
             </div>
         </div>
-      {{--   {{ $tasks->links() }} --}}
+        {{--   {{ $tasks->links() }} --}}
     </div>
 </div>
 </div>

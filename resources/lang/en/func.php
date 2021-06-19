@@ -31,6 +31,22 @@ return [
     'edit_notes' => 'Edit Note',
     'show_notes' => 'Show Note',
 
+    'there_are_files' => 'There are files',
+    'there_are_images' => 'There are images',
     'image' => 'Image',
-   
+    'no' => 'No',
+    'no_notes' => 'No Notes',
+    'no_tasks' => 'No Tasks',
+    'no_completed_tasks' => 'No Completed Tasks',
+    'upload_image' => 'Upload Images',
+    'uploaded_images' => 'Uploaded Images',  
+    'add_image' => 'Add Image',
+    'delete' => 'Delete',
+    'confirm_delete' => 'Similarly, to remove?',
+
+    'file' => 'Files',
+    'upload_file' => 'Upload Files',
+    'uploaded_files' => 'Uploaded Files',
+    'add_file' => 'Add File',   
+    
 ];

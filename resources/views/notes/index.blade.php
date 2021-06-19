@@ -11,7 +11,7 @@
     <!--main content view-->
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 ">
                 <div class="wrapper-tasks">
                     <div class="wrapper-button">
                         <a href="{{ route('notes.create', app()->getLocale()) }}"
@@ -52,12 +52,13 @@
                         </div>
                         </Form> --}}
                     </div>
+                    @if (count($notes) > 0)
                     <table>
                         <thead>
                             <tr>
                                 <th scope="col"><b>{{ __('func.title_note') }}</b></th>
                                 <th scope="col"><b>{{ __('func.content_note') }}</b></th>
-                                 <th scope="col"><b>{{ __('func.files') }}</b></th>
+                                <th scope="col"><b>{{ __('func.files') }}</b></th>
                                 <th scope="col"><b>{{ __('func.image') }}</b></th>
                                 <th scope="col"><b>{{ __('func.created_at') }}</b></th>
                                 <th scope="col"><b>{{ __('func.action') }}</b></th>
@@ -69,17 +70,23 @@
                                 <td class="table-title" data-label="{{ __('func.title_note') }}">{{ $note->title }}</td>
                                 <td class="table-title" data-label="{{ __('func.content_note') }}">{!! $note->content
                                     !!}</td>
-                                <td data-label="{{ __('func.files') }}">123</td>
+                                <td data-label="{{ __('func.files') }}">
+
+                                    @if (count($note->file) > 0)
+                                    {{ __('func.there_are_files') }}
+                                    @else
+                                    {{ __('func.no') }}
+                                    @endif
+
+                                </td>
                                 <td data-label="{{ __('func.image') }}">
-                                    @isset($note->image)
-                                    @foreach($note->image as $img)
-                                    <div class="wrapper-image-main">
-                                        <div class="image-main" id="">
-                                            <img src="{{ url('images/'.$img->image)}}" alt="{{$img->image}}">
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                    @endisset
+
+                                    @if (count($note->image) > 0)
+                                    {{ __('func.there_are_images') }}
+                                    @else
+                                    {{ __('func.no') }}
+                                    @endif
+
                                 </td>
                                 <td data-label="{{ __('func.created_at') }}">{{ $note->created_at }}</td>
                                 <td data-label="{{ __('func.action') }}">
@@ -101,7 +108,8 @@
                                             action="{{ route('notes.destroy', [app()->getLocale(), $note->id]) }}">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button-action flex-column"><i
+                                            <button onclick="return confirm('{{ __('func.confirm_delete') }}')"
+                                                class="button-action flex-column"><i
                                                     class="fa fa-trash icons icons-delete"
                                                     aria-hidden="true"></i></button>
                                         </Form>
@@ -111,6 +119,11 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @else
+                    <div class="wrapper-not-alert">
+                        {{ __('func.no_notes') }}
+                    </div>
+                    @endif
                 </div>
             </div>
             {{--   {{ $tasks->links() }} --}}
