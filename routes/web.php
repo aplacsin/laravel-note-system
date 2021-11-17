@@ -40,22 +40,23 @@ Route::group(['prefix' => '{locale}', 'where' => ['locale' => '[a-zA-Z]{2}'], 'm
     Route::get('/password/reset/{token}', 'App\Http\Controllers\Auth\ResetPasswordController@showResetForm');
     Route::post('/password/reset', 'App\Http\Controllers\Auth\ResetPasswordController@reset');    
 
-    /* Route Notes */    
-    Route::get('/notes', 'App\Http\Controllers\NoteController@index')->name('notes.index');
-    Route::get('/notes/{id}/show', 'App\Http\Controllers\NoteController@show')->name('notes.show');
-    Route::get('/notes/create', 'App\Http\Controllers\NoteController@create')->name('notes.create');   
-    Route::post('/notes/store', 'App\Http\Controllers\NoteController@store')->name('notes.store'); 
-    Route::get('/notes/{id}/edit', 'App\Http\Controllers\NoteController@edit')->name('notes.edit'); 
-    Route::put('/notes/{id}/update', 'App\Http\Controllers\NoteController@update')->name('notes.update');   
-    Route::delete('/notes/{id}/destroy', 'App\Http\Controllers\NoteController@destroy')->name('notes.destroy');    
-    
-    /* Route Tasks */
-    Route::get('/tasks', 'App\Http\Controllers\TaskController@index')->name('tasks.index');
-    Route::get('/tasks/completed', 'App\Http\Controllers\TaskController@completed')->name('tasks.completed');
-    Route::get('/tasks/create', 'App\Http\Controllers\TaskController@create')->name('tasks.create');    
-    Route::post('/tasks/store', 'App\Http\Controllers\TaskController@store')->name('tasks.store');      
-    Route::get('/tasks/{id}/completed', 'App\Http\Controllers\TaskController@getCompleted')->name('tasks.getCompleted'); 
-    Route::delete('/tasks/completed/{id}/destroy', 'App\Http\Controllers\TaskController@destroyCompleted')->name('tasks.destroyCompleted'); 
-    Route::delete('/tasks/{id}/destroy', 'App\Http\Controllers\TaskController@destroy')->name('tasks.destroy');  
-    
+    Route::group(['middleware' => 'auth'], function() {
+        /* Route Notes */    
+        Route::get('/notes', 'App\Http\Controllers\NoteController@index')->name('notes.index');
+        Route::get('/notes/{id}/show', 'App\Http\Controllers\NoteController@show')->name('notes.show');
+        Route::get('/notes/create', 'App\Http\Controllers\NoteController@create')->name('notes.create');   
+        Route::post('/notes/store', 'App\Http\Controllers\NoteController@store')->name('notes.store'); 
+        Route::get('/notes/{id}/edit', 'App\Http\Controllers\NoteController@edit')->name('notes.edit'); 
+        Route::put('/notes/{id}/update', 'App\Http\Controllers\NoteController@update')->name('notes.update');   
+        Route::delete('/notes/{id}/destroy', 'App\Http\Controllers\NoteController@destroy')->name('notes.destroy');    
+ 
+        /* Route Tasks */
+        Route::get('/tasks', 'App\Http\Controllers\TaskController@index')->name('tasks.index');
+        Route::get('/tasks/completed', 'App\Http\Controllers\TaskController@completed')->name('tasks.completed');
+        Route::get('/tasks/create', 'App\Http\Controllers\TaskController@create')->name('tasks.create');    
+        Route::post('/tasks/store', 'App\Http\Controllers\TaskController@store')->name('tasks.store');      
+        Route::get('/tasks/{id}/completed', 'App\Http\Controllers\TaskController@getCompleted')->name('tasks.getCompleted'); 
+        Route::delete('/tasks/completed/{id}/destroy', 'App\Http\Controllers\TaskController@destroyCompleted')->name('tasks.destroyCompleted'); 
+        Route::delete('/tasks/{id}/destroy', 'App\Http\Controllers\TaskController@destroy')->name('tasks.destroy');  
+    }); 
 });
