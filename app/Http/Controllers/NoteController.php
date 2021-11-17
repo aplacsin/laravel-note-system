@@ -21,11 +21,13 @@ class NoteController extends Controller
     public function index()
     {       
         if (Auth::check()) {  
-            $userId = auth()->user()->id;        
+            $userId = auth()->user()->id; 
+
             $notes = Note::query()
             ->where('user_id', $userId)
             ->orderBy('created_at', 'DESC')
-            ->get();       
+            ->get();  
+
             return view('notes.index', compact('notes'));
         }
         else 
@@ -48,10 +50,10 @@ class NoteController extends Controller
     public function store(StoreNoteRequest $request) 
     { 
         $userId = auth()->user()->id;
+
         $note = $request->all();
         $note['user_id'] = $userId;
-        $notes = Note::create($note);                     
-
+        $notes = Note::create($note);
 
         /* Add image */
         if($request->hasFile('image')){
@@ -108,7 +110,8 @@ class NoteController extends Controller
 
     public function destroy($id)
     {        
-        $note = Note::findOrfail($id)->delete();       
+        $note = Note::findOrfail($id)->delete(); 
+
         return redirect()->back()
                          ->with('success', trans('alert.success_delete_note'));
     }
@@ -116,7 +119,7 @@ class NoteController extends Controller
     public function destroyImage($id)
     {        
         $imageName = Image::findorfail($id)->image;
-        Image::where('id', $id)->delete();
+        Image::where('id', $id)->delete();        
         $path = public_path().'/images/'.$imageName;
         unlink($path);
     }
@@ -124,8 +127,7 @@ class NoteController extends Controller
     public function destroyFile($id)
     {        
         $fileName = File::findorfail($id)->file; 
-        File::where('id', $id)->delete(); 
-
+        File::where('id', $id)->delete();
         $path = public_path().'/files/'.$fileName;
         unlink($path);
     }
@@ -146,6 +148,7 @@ class NoteController extends Controller
     {   
         if (Auth::check()) {   
             $notes = Note::findOrfail($id);
+            
             return view('notes.edit', ['note' => $notes, app()->getLocale()]);
         }
         else

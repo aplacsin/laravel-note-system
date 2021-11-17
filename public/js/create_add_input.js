@@ -37,7 +37,7 @@ $(document).ready(function () {
 /* Files */
 $(document).ready(function () {
     let max_fields = 5,
-        wrapper = $(".wrapper-file"),
+        wrapper = $(".wrapper-create-file"),
         add_button = $(".add-create-file-field"),
         x = 1;
 

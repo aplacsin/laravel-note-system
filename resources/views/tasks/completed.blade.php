@@ -8,7 +8,7 @@
     @include('layouts.flash-message')
     <!--navigation here-->
     <!--main content view-->
-    <div class="container">
+    <div class="container table-container">
         <div class="row">
             <div class="col-md-12">
                 <div class="wrapper-tasks completed-table">

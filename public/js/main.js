@@ -8,3 +8,10 @@ container.onclick = function () {
 setTimeout(function(){
     document.body.className="";
 },500);
+
+$('.name-file').each(function() {
+    var h2 = $(this);
+    var text = h2.text();
+    var replacement = text.substr(text.indexOf('_') + 1);
+    h2.text(replacement);
+});

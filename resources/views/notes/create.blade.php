@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="wrapper-file">
+                                <div class="wrapper-create-file">
                                     <span>
                                         <h5>{{ __('func.upload_file') }}
                                     </span></h5>

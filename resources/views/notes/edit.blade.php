@@ -84,7 +84,8 @@
 
                         <div class="wrapper-file-edit">
                             <div class="file-edit" id="file-edit">
-                                <a href="{{ url('files/'.$file->file)}}">{{ $file->file }}</a>
+                                <i class="fa fa-file" aria-hidden="true"><span
+                                        class="name-file">{{ $file->file }}</span></i>
                             </div>
                             <div class="btn-edit-delete">
                                 <button class="btn btn-danger edit-delete edit-file-delete"

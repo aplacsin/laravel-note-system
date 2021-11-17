@@ -47,7 +47,7 @@
                         @endif
 
                         @if (count($note->file) > 0)
-                        <div class="wrapper-file">
+                        <div class="title-wrapper-file">
                             <h4>{{ __('func.file') }}</h4>
                         </div>
                         <div class="wrapper-file">
@@ -55,8 +55,8 @@
                             @foreach($note->file as $file)
                             <div class="wrapper-file-show">
                                 <div class="file-show">
-                                    <i class="fa fa-file" aria-hidden="true"><a class="file-link"
-                                            href="{{ url('files/'.$file->file)}}">{{ $file->file }}</a></i>
+                                    <i class="fa fa-file" aria-hidden="true"><span class="name-file">{{ $file->file }}</span></i>
+                                    <a class="file-link" href="{{ url('files/'.$file->file)}}"><i class="fa fa-download" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                             @endforeach
