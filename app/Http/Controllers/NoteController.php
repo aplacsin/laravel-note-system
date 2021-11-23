@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Image;
 use App\Models\File;
 use App\Http\Requests\StoreNoteRequest;
 use App\Services\NoteService;
@@ -15,7 +12,7 @@ class NoteController extends Controller
 {
     use AuthenticatesUsers;
 
-    private $noteService;
+    private NoteService $noteService;
 
     public function __construct(NoteService $noteService)
     {
@@ -23,49 +20,41 @@ class NoteController extends Controller
     }
 
     public function index()
-    {        
+    {
         $userId = auth()->user()->id;
         $notes = $this->noteService->getNoteByUserId($userId);
-        return view('notes.index', compact('notes'));        
+
+        return view('notes.index', compact('notes'));
     }
 
     public function create()
     {
-        return view('notes.create');        
+        return view('notes.create');
     }
 
-    public function store(StoreNoteRequest $request) 
-    { 
+    public function store(StoreNoteRequest $request)
+    {
         $userId = auth()->user()->id;
         $note = $request->all();
         $note['user_id'] = $userId;
 
         $this->noteService->create($request, $note);
 
-        // Redirect to index
-       return redirect()->route('notes.index', app()->getLocale())
+        return redirect()->route('notes.index', app()->getLocale())
                         ->with('success', trans('alert.success_created_note'));
     }
 
     public function destroy($id)
-    {        
+    {
         $this->noteService->deleteById($id);
 
         return redirect()->back()
                          ->with('success', trans('alert.success_delete_note'));
     }
 
-    public function destroyImage($id)
-    {        
-        $imageName = Image::findorfail($id)->image;
-        Image::where('id', $id)->delete();        
-        $path = public_path().'/images/'.$imageName;
-        unlink($path);
-    }
-
     public function destroyFile($id)
-    {        
-        $fileName = File::findorfail($id)->file; 
+    {
+        $fileName = File::findorfail($id)->file;
         File::where('id', $id)->delete();
         $path = public_path().'/files/'.$fileName;
         unlink($path);
@@ -74,20 +63,21 @@ class NoteController extends Controller
     public function show($id)
     {
         $notes = $this->noteService->getById($id);
-        return view('notes.show', ['note' => $notes, app()->getLocale()]);       
+
+        return view('notes.show', ['note' => $notes, app()->getLocale()]);
     }
 
     public function edit($id)
     {
-        $notes = $this->noteService->getById($id);            
-        return view('notes.edit', ['note' => $notes, app()->getLocale()]);        
+        $notes = $this->noteService->getById($id);
+
+        return view('notes.edit', ['note' => $notes, app()->getLocale()]);
     }
 
     public function update(StoreNoteRequest $request, $id)
     {
-        $notes = $this->noteService->update($request, $id);
+        $this->noteService->update($request, $id);
 
-        // Redirect to index
         return redirect()->route('notes.index', app()->getLocale())
                          ->with('success', trans('alert.success_update_note'));
     }

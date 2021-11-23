@@ -17,7 +17,7 @@ Route::get('/', function () {
     return redirect(app()->getLocale());
 });
 
-Route::delete('image/{id}/destroy', 'App\Http\Controllers\NoteController@destroyImage')->name('image.destroy');  
+Route::delete('image/{id}/destroy', 'App\Http\Controllers\ImageController@destroy')->name('image.destroy');  
 Route::delete('file/{id}/destroy', 'App\Http\Controllers\NoteController@destroyFile')->name('file.destroy');
 
 Route::group(['prefix' => '{locale}', 'where' => ['locale' => '[a-zA-Z]{2}'], 'middleware' => 'setlocale'], function() {

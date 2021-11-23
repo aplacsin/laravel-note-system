@@ -2,8 +2,9 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Collection;
 use App\Models\Note;
+use Facade\FlareClient\Http\Exceptions\NotFound;
+use Illuminate\Support\Collection;
 
 class NoteRepository implements NoteRepositoryInterface
 {
@@ -18,16 +19,27 @@ class NoteRepository implements NoteRepositoryInterface
     public function save(Note $note): Note
     {
         $note->save();
+
         return $note;
     }
 
     public function removeById(int $id): void
     {
-       Note::findOrfail($id)->delete();
+       Note::query()
+           ->findOrfail($id)
+           ->delete();
     }
 
-    public function findById(int $id): Note
+    public function findById(int $id): ?Note
     {
-        return Note::findorfail($id);
+        $model = Note::query()
+            ->findorfail($id);
+
+        if(!$model) {
+            throw new NotFound();
+        }
+
+        /** @var Note $model */
+        return $model;
     }
 }

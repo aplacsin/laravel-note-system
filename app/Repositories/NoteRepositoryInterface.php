@@ -13,5 +13,5 @@ interface NoteRepositoryInterface
 
     public function removeById(int $id): void;
 
-    public function findById(int $id): Note;
+    public function findById(int $id): ?Note;
 }
