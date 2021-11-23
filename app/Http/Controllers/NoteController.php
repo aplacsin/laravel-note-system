@@ -6,6 +6,8 @@ use App;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Requests\StoreNoteRequest;
 use App\Services\NoteService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
@@ -20,7 +22,7 @@ class NoteController extends Controller
 
     public function index()
     {
-        $userId = auth()->user()->id;
+        $userId = Auth::id();
         $notes = $this->noteService->getNoteByUserId($userId);
 
         return view('notes.index', compact('notes'));
@@ -31,9 +33,9 @@ class NoteController extends Controller
         return view('notes.create');
     }
 
-    public function store(StoreNoteRequest $request)
+    public function store(StoreNoteRequest $request): RedirectResponse
     {
-        $userId = auth()->user()->id;
+        $userId = Auth::id();
         $note = $request->all();
         $note['user_id'] = $userId;
 
@@ -43,7 +45,7 @@ class NoteController extends Controller
                         ->with('success', trans('alert.success_created_note'));
     }
 
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $this->noteService->deleteById($id);
 
@@ -51,21 +53,21 @@ class NoteController extends Controller
                          ->with('success', trans('alert.success_delete_note'));
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $notes = $this->noteService->getById($id);
 
         return view('notes.show', ['note' => $notes, app()->getLocale()]);
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
         $notes = $this->noteService->getById($id);
 
         return view('notes.edit', ['note' => $notes, app()->getLocale()]);
     }
 
-    public function update(StoreNoteRequest $request, $id)
+    public function update(StoreNoteRequest $request, int $id): RedirectResponse
     {
         $this->noteService->update($request, $id);
 

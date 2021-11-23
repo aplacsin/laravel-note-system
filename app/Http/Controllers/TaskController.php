@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App;
-use Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use App\Models\Task;
-use App\Models\User;
 use App\Models\Completed;
-use DateTime;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\FilterTaskRequest;
 
@@ -21,51 +17,39 @@ class TaskController extends Controller
 
     public function index(FilterTaskRequest $request)
     {
-        if (Auth::check()) {  
-            $title = $request->title;
-            $priority = $request->priority;
-            $sort = $request->sort;
-            $method = $request->method_sort;
+        $title = $request->title;
+        $priority = $request->priority;
+        $sort = $request->sort;
+        $method = $request->method_sort;
 
-            $userId = auth()->user()->id;
-       
-            $tasks = Task::query()
-            ->where('user_id', $userId);       
+        $userId = auth()->user()->id;
 
-            if ($request->has('title')) {
-                $tasks->where('title', 'like', "%{$title}%");
-            }
+        $tasks = Task::query()
+            ->where('user_id', $userId);
 
-            if ($request->get('priority')) {
-                $tasks->where('priority', $priority);            
-            }
-
-            if ($request->get('sort')) {
-                $tasks->orderBy("{$sort}", "{$method}");
-            }
-
-            $tasks = $tasks->orderBy('created_at', 'DESC')->get();
-       
-            return view('tasks.index', compact('tasks'));  
+        if ($request->has('title')) {
+            $tasks->where('title', 'like', "%{$title}%");
         }
-        else
-        {
-            return redirect()->route('login', app()->getLocale());
-        }      
+
+        if ($request->get('priority')) {
+            $tasks->where('priority', $priority);
+        }
+
+        if ($request->get('sort')) {
+            $tasks->orderBy("{$sort}", "{$method}");
+        }
+
+        $tasks = $tasks->orderBy('created_at', 'DESC')->get();
+
+        return view('tasks.index', compact('tasks'));
     }
 
     public function create()
     {
-        if (Auth::check()) {  
-            return view('tasks.create');
-        }
-        else
-        {
-            return redirect()->route('login', app()->getLocale());
-        }
+        return view('tasks.create');
     }
 
-    public function store(StoreTaskRequest $request)
+    public function store(StoreTaskRequest $request): RedirectResponse
     {
         $userId = auth()->user()->id;
 
@@ -78,7 +62,7 @@ class TaskController extends Controller
                         ->with('success', trans('alert.success_created_task'));
     }
 
-    public function destroy($id) 
+    public function destroy($id): RedirectResponse
     {
         Task::findorfail($id)->delete();
 
@@ -87,10 +71,10 @@ class TaskController extends Controller
                          ->with('success', trans('alert.success_delete_task'));
     }
 
-    public function getCompleted($id)
-    {        
-        $id = \Request::segment(3);        
-        $task = Task::where('id', $id)->first();        
+    public function getCompleted($id): RedirectResponse
+    {
+        $id = Request::segment(3);
+        $task = Task::where('id', $id)->first();
         $user_id = $task->user_id;
         $title = $task->title;
         $priority = $task->priority;
@@ -114,25 +98,20 @@ class TaskController extends Controller
 
     public function completed()
     {
-        if (Auth::check()) {  
-            $userId = auth()->user()->id;
-
-            $tasks = Completed::query()
+        $userId = auth()->user()->id;
+        $tasks = Completed::query()
             ->where('user_id', $userId)
             ->orderBy('updated_at', 'DESC')
             ->paginate(15);
-       
-            return view('tasks.completed', compact('tasks'));
-        }
-        else
-        {
-            return redirect()->route('login', app()->getLocale());
-        }
+
+        return view('tasks.completed', compact('tasks'));
     }
 
     public function destroyCompleted($id)
-    {      
-        Completed::findorfail($id)->delete();
+    {
+        Completed::query()
+            ->findorfail($id)
+            ->delete();
 
         // Redirect to index
         return redirect()->back()

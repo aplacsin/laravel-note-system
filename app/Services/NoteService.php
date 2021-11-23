@@ -12,12 +12,14 @@ class NoteService
     private NoteRepositoryInterface $noteRepository;
     private ImageService $imageService;
     private FileService $fileService;
+    private NoteCreator $noteCreator;
 
-    public function __construct(NoteRepositoryInterface $noteRepository, ImageService $imageService, FileService $fileService)
+    public function __construct(NoteRepositoryInterface $noteRepository, ImageService $imageService, FileService $fileService, NoteCreator $noteCreator)
     {
         $this->noteRepository = $noteRepository;
         $this->imageService = $imageService;
         $this->fileService = $fileService;
+        $this->noteCreator = $noteCreator;
     }
 
     public function getNoteByUserId(int $userId): Collection
@@ -25,9 +27,9 @@ class NoteService
         return $this->noteRepository->findNotesByUserId($userId);
     }
 
-    public function create(StoreNoteRequest $request, $note)
+    public function create(StoreNoteRequest $request, array $note)
     {
-        $notes = Note::create($note);
+        $notes = $this->noteCreator->create($note);
 
         $this->imageService->bulkCreate($request, $notes);
         $this->fileService->bulkCreate($request, $notes);
