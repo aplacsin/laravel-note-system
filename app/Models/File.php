@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+/**
+ * @property int $note_id
+ * @property string $file
+ */
 class File extends Model
 {
     protected $fillable = [

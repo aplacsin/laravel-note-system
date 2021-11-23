@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\FileRepository;
+use App\Repositories\FileRepositoryInterface;
 use App\Repositories\ImageRepository;
 use App\Repositories\ImageRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +27,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ImageRepositoryInterface::class,
             ImageRepository::class
+        );
+
+        $this->app->bind(
+            FileRepositoryInterface::class,
+            FileRepository::class
         );
     }
 

@@ -30,6 +30,9 @@ class NoteRepository implements NoteRepositoryInterface
            ->delete();
     }
 
+    /**
+     * @throws NotFound
+     */
     public function findById(int $id): ?Note
     {
         $model = Note::query()

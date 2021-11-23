@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use App\Models\File;
 use App\Http\Requests\StoreNoteRequest;
 use App\Services\NoteService;
 
@@ -50,14 +49,6 @@ class NoteController extends Controller
 
         return redirect()->back()
                          ->with('success', trans('alert.success_delete_note'));
-    }
-
-    public function destroyFile($id)
-    {
-        $fileName = File::findorfail($id)->file;
-        File::where('id', $id)->delete();
-        $path = public_path().'/files/'.$fileName;
-        unlink($path);
     }
 
     public function show($id)
