@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateTasksTable extends Migration
@@ -19,6 +20,7 @@ class CreateTasksTable extends Migration
             $table->text('title')->nullable();
             $table->integer('priority');
             $table->string('status')->default('ToDo');
+            $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });
 

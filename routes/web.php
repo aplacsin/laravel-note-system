@@ -52,11 +52,11 @@ Route::group(['prefix' => '{locale}', 'where' => ['locale' => '[a-zA-Z]{2}'], 'm
 
         /* Route Tasks */
         Route::get('/tasks', 'App\Http\Controllers\TaskController@index')->name('tasks.index');
-        Route::get('/tasks/completed', 'App\Http\Controllers\TaskController@completed')->name('tasks.completed');
+        Route::get('/tasks/completed', 'App\Http\Controllers\TaskController@getComplete')->name('tasks.completed');
         Route::get('/tasks/create', 'App\Http\Controllers\TaskController@create')->name('tasks.create');
         Route::post('/tasks/store', 'App\Http\Controllers\TaskController@store')->name('tasks.store');
-        Route::get('/tasks/{id}/completed', 'App\Http\Controllers\TaskController@getCompleted')->name('tasks.getCompleted');
-        Route::delete('/tasks/completed/{id}/destroy', 'App\Http\Controllers\TaskController@destroyCompleted')->name('tasks.destroyCompleted');
+        Route::get('/tasks/{id}/completed', 'App\Http\Controllers\TaskController@complete')->name('tasks.complete');
+        Route::delete('/tasks/completed/{id}/destroy', 'App\Http\Controllers\TaskController@removeComplete')->name('tasks.removeComplete');
         Route::delete('/tasks/{id}/destroy', 'App\Http\Controllers\TaskController@destroy')->name('tasks.destroy');
     });
 });

@@ -30,7 +30,7 @@
                                 <div class="wrapper-image">
                                     <span>
                                         <h5>{{ __('func.upload_image') }}
-                                    </span></h5>
+                                    </h5></span>
                                     <button class="btn btn-primary add-create-field add-create-image-field">{{ __('func.add_image') }} &nbsp;<span>+</span></button>
                                     <div><input class="add-file" type="file" name="image[]"></div>
                                 </div>
@@ -39,7 +39,7 @@
                                 <div class="wrapper-create-file">
                                     <span>
                                         <h5>{{ __('func.upload_file') }}
-                                    </span></h5>
+                                   </h5></span>
                                     <button class="btn btn-primary add-create-field add-create-file-field">{{ __('func.add_file') }} &nbsp;<span>+</span></button>
                                     <div><input class="add-file" type="file" name="file[]"></div>
                                 </div>

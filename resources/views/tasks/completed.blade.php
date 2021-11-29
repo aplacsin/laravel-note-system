@@ -28,12 +28,13 @@
                             <tr>
                                 <td data-label="{{ __('func.action') }}">
                                     <div class="action-wp">
-                                        <Form method="POST" action="{{ route('tasks.destroyCompleted', [app()->getLocale(), $task->id]) }}">
+                                        <Form method="POST" action="{{ route('tasks.removeComplete', [app()->getLocale(), $task->id]) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button onclick="return confirm('{{ __('func.confirm_delete') }}')" class="button-action"><i class="fa fa-trash icons icons-delete"
                                                     aria-hidden="true"></i></button>
                                         </Form>
+                                    </div>
                                 </td>
                                 <td class="table-title" data-label="{{ __('func.title_task') }}">{{ $task->title }}</td>
                                 <td data-label="{{ __('func.priority') }}">{{ $task->priority }}</td>

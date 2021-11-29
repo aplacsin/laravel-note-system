@@ -5,6 +5,12 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * @property mixed $title
+ * @property mixed $priority
+ * @property mixed $sort
+ * @property mixed $method_sort
+ */
 class FilterTaskRequest extends FormRequest
 {
     /**
@@ -22,11 +28,11 @@ class FilterTaskRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => ['nullable','alpha_num'],
-            'priority'   => ['nullable','integer','between:1,5'],            
+            'priority'   => ['nullable','integer','between:1,5'],
             'sort' => [Rule::in(['priority', 'created_at'])],
             'method_sort' => [Rule::in(['asc', 'desc'])],
         ];

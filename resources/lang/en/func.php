@@ -5,7 +5,7 @@ return [
     'Info' => 'To use the web application, use the menu on the left With this app you can take notes, create tasks and manage them.',
     'add_task' => 'Create Task',
     'filter' => 'Filter',
-    'title_serch' => 'Title Search',
+    'title_search' => 'Title Search',
     'select_priority' => 'Select priority',
     'select_sort' => 'Select sort',
     'priority' => 'Priority',
@@ -39,7 +39,7 @@ return [
     'no_tasks' => 'No Tasks',
     'no_completed_tasks' => 'No Completed Tasks',
     'upload_image' => 'Upload Images',
-    'uploaded_images' => 'Uploaded Images',  
+    'uploaded_images' => 'Uploaded Images',
     'add_image' => 'Add Image',
     'delete' => 'Delete',
     'confirm_delete' => 'Similarly, to remove?',
@@ -47,6 +47,6 @@ return [
     'file' => 'Files',
     'upload_file' => 'Upload Files',
     'uploaded_files' => 'Uploaded Files',
-    'add_file' => 'Add File',   
-    
+    'add_file' => 'Add File',
+
 ];

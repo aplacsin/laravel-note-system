@@ -31,7 +31,7 @@
                                 <div class="wrapper-edit-image-form">
                                     <span>
                                         <h5>{{ __('func.upload_image') }}
-                                    </span></h5>
+                                    </h5></span>
                                     <button class="btn btn-primary add-edit-image-field"
                                         id="add-create-field">{{ __('func.add_image') }} &nbsp;<span>+</span></button>
                                 </div>
@@ -40,7 +40,7 @@
                                 <div class="wrapper-edit-file-form">
                                     <span>
                                         <h5>{{ __('func.upload_file') }}
-                                    </span></h5>
+                                    </h5></span>
                                     <button class="btn btn-primary add-edit-file-field"
                                         id="add-create-field">{{ __('func.add_file') }} &nbsp;<span>+</span></button>
                                 </div>
@@ -52,7 +52,7 @@
                     </Form>
                     @if (count($note->image) > 0)
                     <div class="title-upload-image">
-                        <span>{{ __('func.uploaded_images') }}:</h5>
+                        <span>{{ __('func.uploaded_images') }}:
                         </span>
                     </div>
                     <div class="wrapper-img">

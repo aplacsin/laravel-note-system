@@ -6,6 +6,8 @@ use App\Repositories\FileRepository;
 use App\Repositories\FileRepositoryInterface;
 use App\Repositories\ImageRepository;
 use App\Repositories\ImageRepositoryInterface;
+use App\Repositories\TaskRepository;
+use App\Repositories\TaskRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\NoteRepositoryInterface;
 use App\Repositories\NoteRepository;
@@ -32,6 +34,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             FileRepositoryInterface::class,
             FileRepository::class
+        );
+
+        $this->app->bind(
+            TaskRepositoryInterface::class,
+            TaskRepository::class
         );
     }
 

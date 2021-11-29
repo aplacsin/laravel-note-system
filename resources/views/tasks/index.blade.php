@@ -27,7 +27,7 @@
                         <div class="collapse" id="collapse">
                             <div class="form-group">
                                 <input class="form-control" name="title" value="{{ old('title') }}"
-                                    placeholder="{{ __('func.title_serch') }}"><br>
+                                    placeholder="{{ __('func.title_search') }}"><br>
                                 <div class="selected-wrapper">
                                     <select name="priority" class="form-control">
                                         <option disabled selected>{{ __('func.select_priority') }}</option>
@@ -51,6 +51,7 @@
                                     <button class="btn btn-primary">{{ __('func.filtered') }}</button>
                                 </div>
                             </div>
+                        </div>
                     </Form>
                 </div>
                 <table>
@@ -69,7 +70,7 @@
                             <td data-label="{{ __('func.action') }}">
                                 <div class="action-wp">
                                     <Form method="GET"
-                                        action="{{ route('tasks.getCompleted', [app()->getLocale(), $task->id]) }}">
+                                        action="{{ route('tasks.complete', [app()->getLocale(), $task->id]) }}">
                                         @csrf
                                         <button class="button-action flex-column"><i
                                                 class="fa fa-check icons icons-complete"
