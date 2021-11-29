@@ -16,8 +16,8 @@
                         <a class="btn btn-primary"
                             href="{{ route('notes.index', app()->getLocale()) }}">{{ __('func.back') }}</a>
                     </div>
-                    <Form method="post" action="{{ route('notes.store', app()->getLocale()) }}"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('notes.store', app()->getLocale()) }}" method="post"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <input type="text" class="form-control" name="title" value="{{ old('title') }}"
@@ -48,7 +48,7 @@
                                 <button class="btn btn-success btn-create">{{ __('func.create') }}</button>
                             </div>
                         </div>
-                    </Form>
+                    </form>
                 </div>
             </div>
         </div>

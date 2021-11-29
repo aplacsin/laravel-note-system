@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
 /**
@@ -16,7 +17,7 @@ class File extends Model
         'note_id', 'file'
      ];
 
-    public function note()
+    public function note(): BelongsTo
     {
         return $this->belongsTo(Note::class, 'note_id', 'id');
     }

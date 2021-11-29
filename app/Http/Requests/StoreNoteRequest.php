@@ -11,7 +11,7 @@ class StoreNoteRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,15 +21,15 @@ class StoreNoteRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => ['required', 'max:150'],
             'content' => ['required'],
-            'image[]' => ['nullable', 'mimes:jpg,jpeg,bmp,png', 'max:10000'],
-            'image.*[]' => ['nullable', 'mimes:jpg,jpeg,bmp,png', 'max:10000'],  
-            'file[]' => ['nullable', 'mimes:txt,doc,docx,pdf'],
-            'file.*[]' => ['nullable', 'mimes:txt,doc,docx,pdf'],
+            'image' => ['nullable'],
+            'image.*' => ['mimes:jpeg,png,jpg,gif,svg'],
+            'file' => ['nullable'],
+            'file.*' => ['mimes:txt,doc,docx,pdf'],
         ];
     }
 }

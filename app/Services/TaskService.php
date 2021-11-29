@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-
-
 use App\Models\Task;
 use App\Repositories\TaskRepository;
 use Carbon\Carbon;
@@ -46,10 +44,12 @@ class TaskService
         $task = $this->taskRepository->findById($id);
         $currentDate = Carbon::now()->format("Y-m-d H:i:s");
 
+        /**
+         * @var Task $task
+         **/
         $task->status = 'Completed';
         $task->completed_at = $currentDate;
 
-        /** @var Task $task */
         return $this->taskRepository->save($task);
     }
 }

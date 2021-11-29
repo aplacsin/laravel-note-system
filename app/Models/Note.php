@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $user_id
- * @property string|null $title
- * @property string|null $content
+ * @property string $title
+ * @property string $content
  */
 class Note extends Model
 {

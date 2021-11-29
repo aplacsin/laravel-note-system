@@ -15,7 +15,7 @@ class ImageController extends Controller
         $this->imageService = $imageService;
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         $this->imageService->deleteById($id);
 

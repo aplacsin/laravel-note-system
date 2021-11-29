@@ -31,7 +31,7 @@ $(document).ready(function () {
 /* Delete images */
 
 $(".edit-image-delete").click(function () {
-    //Then you get the html element and set to it the lang attribute.    
+    //Then you get the html element and set to it the lang attribute.
     /*   var lang = $("html").filter(":first").attr("lang"); */
     let id = $(this).data("id"),
         token = $("meta[name='csrf-token']").attr("content");

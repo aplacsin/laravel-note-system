@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $user_id
- * @property string|null $title
+ * @property string $title
  * @property int $priority
  * @property string $status
  * @property string|null $completed_at

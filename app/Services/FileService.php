@@ -40,11 +40,11 @@ class FileService
     public function bulkCreate(StoreNoteRequest $request, $notes)
     {
         /* Add file */
-        if($request->hasFile('file')){
+        if($files = $request->file('file')) {
             $noteId = $notes->id;
 
-            foreach($request->file('file') as $file)
-            {
+            foreach($files as $file) {
+
                 if(!isset($file)) {
                     break;
                 }
