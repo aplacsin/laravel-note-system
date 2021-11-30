@@ -19,7 +19,7 @@ class TaskService
         $this->taskCreator = $taskCreator;
     }
 
-    public function create(array $task)
+    public function create(array $task): void
     {
         $this->taskCreator->create($task);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $title
  * @property int $priority
  * @property string $status
- * @property string|null $completed_at
+ * @property Carbon|null $completed_at
  */
 class Task extends Model
 {

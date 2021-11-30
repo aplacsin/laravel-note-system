@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Requests\StoreNoteRequest;
 use App\Models\File;
 use App\Repositories\FileRepositoryInterface;
 use Illuminate\Support\Str;
@@ -16,7 +15,7 @@ class FileService
         $this->fileRepository = $fileRepository;
     }
 
-    public function deleteById(int $id)
+    public function deleteById(int $id): void
     {
         $fileName = $this->fileRepository->findByID($id)->file;
         $this->fileRepository->removeById($id);
@@ -24,7 +23,7 @@ class FileService
         unlink($path);
     }
 
-    public function create($file, int $noteId)
+    public function create($file, int $noteId): void
     {
         $name = $file->getClientOriginalName();
         $fileName = 'file-'.Str::random(10).'_'.$name;
@@ -37,20 +36,19 @@ class FileService
         $this->fileRepository->save($file);
     }
 
-    public function bulkCreate(StoreNoteRequest $request, $notes)
+    public function bulkCreate(?array $files, int $noteId): void
     {
-        /* Add file */
-        if($files = $request->file('file')) {
-            $noteId = $notes->id;
+        if (!$files) {
+            return;
+        }
 
-            foreach($files as $file) {
+        foreach ($files as $file) {
 
-                if(!isset($file)) {
-                    break;
-                }
-
-                $this->create($file, $noteId);
+            if (!isset($file)) {
+                break;
             }
+
+            $this->create($file, $noteId);
         }
     }
 }

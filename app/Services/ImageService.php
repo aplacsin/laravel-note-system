@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Requests\StoreNoteRequest;
 use App\Models\Image;
 use App\Repositories\ImageRepositoryInterface;
 use Illuminate\Support\Str;
@@ -16,7 +15,7 @@ class ImageService
         $this->imageRepository = $imageRepository;
     }
 
-    public function deleteById(int $id)
+    public function deleteById(int $id): void
     {
         $imageName = $this->imageRepository->findById($id)->image;
         $this->imageRepository->removeById($id);
@@ -24,7 +23,7 @@ class ImageService
         unlink($path);
     }
 
-    public function create($file, int $noteId)
+    public function create($file, int $noteId): void
     {
         $name = $file->getClientOriginalName();
         $fileName = 'file-' . Str::random(10) . '_' . $name;
@@ -37,20 +36,19 @@ class ImageService
         $this->imageRepository->save($image);
     }
 
-    public function bulkCreate(StoreNoteRequest $request, $notes)
+    public function bulkCreate(?array $images, int $noteId): void
     {
-        /* Add image */
-        if ($files = $request->file('image')) {
-            $noteId = $notes->id;
+        if (!$images) {
+            return;
+        }
 
-            foreach ($files as $file) {
+        foreach ($images as $file) {
 
-                if (!isset($file)) {
-                    break;
-                }
-
-                $this->create($file, $noteId);
+            if (!isset($file)) {
+                break;
             }
+
+            $this->create($file, $noteId);
         }
     }
 }

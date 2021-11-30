@@ -4,16 +4,16 @@ namespace App\Repositories;
 
 use App\Models\Note;
 use Facade\FlareClient\Http\Exceptions\NotFound;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class NoteRepository implements NoteRepositoryInterface
 {
-    public function findNotesByUserId(int $userId): Collection
+    public function findByUserId(int $userId): LengthAwarePaginator
     {
         return Note::query()
         ->where('user_id', $userId)
         ->orderBy('created_at', 'DESC')
-        ->get();
+        ->paginate(15);
     }
 
     public function save(Note $note): Note

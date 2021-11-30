@@ -126,7 +126,7 @@
                     @endif
                 </div>
             </div>
-            {{--   {{ $tasks->links() }} --}}
+        {{ $notes->links() }}
         </div>
     </div>
 </div>

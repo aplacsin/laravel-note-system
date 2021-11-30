@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\DTO\NoteDTO;
 use App\Http\Requests\StoreNoteRequest;
 use App\Services\NoteService;
 use Illuminate\Http\RedirectResponse;
@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
-    use AuthenticatesUsers;
-
     private NoteService $noteService;
 
     public function __construct(NoteService $noteService)
@@ -35,14 +33,18 @@ class NoteController extends Controller
 
     public function store(StoreNoteRequest $request): RedirectResponse
     {
-        $userId = Auth::id();
-        $note = $request->all();
-        $note['user_id'] = $userId;
+        $noteDTO = NoteDTO::make(
+            $request->input('title'),
+            $request->input('content'),
+            Auth::id(),
+            $request->file('image'),
+            $request->file('file')
+        );
 
-        $this->noteService->create($request, $note);
+        $this->noteService->create($noteDTO);
 
         return redirect()->route('notes.index', app()->getLocale())
-                        ->with('success', trans('alert.success_created_note'));
+            ->with('success', trans('alert.success_created_note'));
     }
 
     public function destroy(int $id): RedirectResponse
@@ -69,7 +71,15 @@ class NoteController extends Controller
 
     public function update(StoreNoteRequest $request, int $id): RedirectResponse
     {
-        $this->noteService->update($request, $id);
+        $noteDTO = NoteDTO::make(
+            $request->input('title'),
+            $request->input('content'),
+            Auth::id(),
+            $request->file('image'),
+            $request->file('file')
+        );
+
+        $this->noteService->update($noteDTO, $id);
 
         return redirect()->route('notes.index', app()->getLocale())
                          ->with('success', trans('alert.success_update_note'));

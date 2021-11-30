@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Collection;
+use App\DTO\NoteDTO;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Note;
 use App\Repositories\NoteRepositoryInterface;
-use App\Http\Requests\StoreNoteRequest;
 
 class NoteService
 {
@@ -22,20 +22,20 @@ class NoteService
         $this->noteCreator = $noteCreator;
     }
 
-    public function getNoteByUserId(int $userId): Collection
+    public function getNoteByUserId(int $userId): LengthAwarePaginator
     {
-        return $this->noteRepository->findNotesByUserId($userId);
+        return $this->noteRepository->findByUserId($userId);
     }
 
-    public function create(StoreNoteRequest $request, array $note)
+    public function create(NoteDTO $noteDTO): void
     {
-        $notes = $this->noteCreator->create($note);
+        $note = $this->noteCreator->create($noteDTO);
 
-        $this->imageService->bulkCreate($request, $notes);
-        $this->fileService->bulkCreate($request, $notes);
+        $this->imageService->bulkCreate($noteDTO->getImage(), $note->id);
+        $this->fileService->bulkCreate($noteDTO->getFile(), $note->id);
     }
 
-    public function deleteById(int $id)
+    public function deleteById(int $id): void
     {
         $this->noteRepository->removeById($id);
     }
@@ -45,13 +45,14 @@ class NoteService
        return $this->noteRepository->findById($id);
     }
 
-    public function update(StoreNoteRequest $request, int $id)
+    public function update(NoteDTO $noteDTO, int $id): void
     {
-        $notes = $this->noteRepository->findById($id);
-        $notes->fill($request->all());
-        $notes->save();
+        $note = $this->noteRepository->findById($id);
+        $note->title = $noteDTO->getTitle();
+        $note->content = $noteDTO->getContent();
 
-        $this->imageService->bulkCreate($request, $notes);
-        $this->fileService->bulkCreate($request, $notes);
+        $this->noteRepository->save($note);
+        $this->imageService->bulkCreate($noteDTO->getImage(), $note->id);
+        $this->fileService->bulkCreate($noteDTO->getFile(), $note->id);
     }
 }

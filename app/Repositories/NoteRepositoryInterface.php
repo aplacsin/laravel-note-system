@@ -2,12 +2,12 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Note;
 
 interface NoteRepositoryInterface
 {
-    public function findNotesByUserId(int $userId): Collection;
+    public function findByUserId(int $userId): LengthAwarePaginator;
 
     public function save(Note $note): Note;
 

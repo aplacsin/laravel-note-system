@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\NoteDTO;
 use App\Models\Note;
 use App\Repositories\NoteRepository;
 
@@ -14,12 +15,12 @@ class NoteCreator
         $this->noteRepository = $noteRepository;
     }
 
-    public function create(array $data): Note
+    public function create(NoteDTO $dto): Note
     {
         $note = new Note();
-        $note->user_id = $data['user_id'];
-        $note->title = $data['title'];
-        $note->content = $data['content'];
+        $note->user_id = $dto->getUserId();
+        $note->title = $dto->getTitle();
+        $note->content = $dto->getContent();
 
         return $this->noteRepository->save($note);
     }
