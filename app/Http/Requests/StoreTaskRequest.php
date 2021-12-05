@@ -29,4 +29,14 @@ class StoreTaskRequest extends FormRequest
             'priority' => ['required',Rule::in(['1', '2','3','4','5'])],
         ];
     }
+
+    public function getTitle(): string
+    {
+        return $this->input('title');
+    }
+
+    public function getPriority(): int
+    {
+        return $this->input('priority');
+    }
 }

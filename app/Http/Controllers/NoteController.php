@@ -6,6 +6,7 @@ use App;
 use App\DTO\NoteDTO;
 use App\Http\Requests\StoreNoteRequest;
 use App\Services\NoteService;
+use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,8 +35,8 @@ class NoteController extends Controller
     public function store(StoreNoteRequest $request): RedirectResponse
     {
         $noteDTO = NoteDTO::make(
-            $request->input('title'),
-            $request->input('content'),
+            $request->getTitle(),
+            $request->getText(),
             Auth::id(),
             $request->file('image'),
             $request->file('file')
@@ -55,6 +56,9 @@ class NoteController extends Controller
                          ->with('success', trans('alert.success_delete_note'));
     }
 
+    /**
+     * @throws NotFound
+     */
     public function show(int $id)
     {
         $notes = $this->noteService->getById($id);
@@ -62,6 +66,9 @@ class NoteController extends Controller
         return view('notes.show', ['note' => $notes, app()->getLocale()]);
     }
 
+    /**
+     * @throws NotFound
+     */
     public function edit(int $id)
     {
         $notes = $this->noteService->getById($id);
@@ -69,11 +76,14 @@ class NoteController extends Controller
         return view('notes.edit', ['note' => $notes, app()->getLocale()]);
     }
 
+    /**
+     * @throws NotFound
+     */
     public function update(StoreNoteRequest $request, int $id): RedirectResponse
     {
         $noteDTO = NoteDTO::make(
-            $request->input('title'),
-            $request->input('content'),
+            $request->getTitle(),
+            $request->getText(),
             Auth::id(),
             $request->file('image'),
             $request->file('file')

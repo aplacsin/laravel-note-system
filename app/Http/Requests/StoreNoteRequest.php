@@ -32,4 +32,14 @@ class StoreNoteRequest extends FormRequest
             'file.*' => ['mimes:txt,doc,docx,pdf'],
         ];
     }
+
+    public function getTitle(): string
+    {
+        return $this->input('title');
+    }
+
+    public function getText(): string
+    {
+        return $this->input('content');
+    }
 }

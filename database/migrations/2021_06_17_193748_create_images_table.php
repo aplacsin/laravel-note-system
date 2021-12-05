@@ -17,6 +17,7 @@ class CreateImagesTable extends Migration
             $table->increments('id');
             $table->integer('note_id')->unsigned();
             $table->string('image');
+            $table->string('disk');
             $table->timestamps();
         });
 

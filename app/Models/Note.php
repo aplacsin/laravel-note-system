@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
@@ -17,6 +18,19 @@ class Note extends Model
     protected $fillable = [
         'user_id', 'title', 'content', 'created_at'
      ];
+
+    public static function boot() {
+        parent::boot();
+        self::deleting(function($note) {
+            foreach($note->image as $image) {
+                $image->delete();
+            }
+
+            foreach($note->file as $file) {
+                $file->delete();
+            }
+        });
+    }
 
     public function user(): BelongsTo
     {

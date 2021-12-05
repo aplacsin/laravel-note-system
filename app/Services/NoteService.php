@@ -3,18 +3,19 @@
 namespace App\Services;
 
 use App\DTO\NoteDTO;
+use App\Repositories\NoteRepository;
+use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Note;
-use App\Repositories\NoteRepositoryInterface;
 
 class NoteService
 {
-    private NoteRepositoryInterface $noteRepository;
+    private NoteRepository $noteRepository;
     private ImageService $imageService;
     private FileService $fileService;
     private NoteCreator $noteCreator;
 
-    public function __construct(NoteRepositoryInterface $noteRepository, ImageService $imageService, FileService $fileService, NoteCreator $noteCreator)
+    public function __construct(NoteRepository $noteRepository, ImageService $imageService, FileService $fileService, NoteCreator $noteCreator)
     {
         $this->noteRepository = $noteRepository;
         $this->imageService = $imageService;
@@ -40,11 +41,17 @@ class NoteService
         $this->noteRepository->removeById($id);
     }
 
+    /**
+     * @throws NotFound
+     */
     public function getById(int $id): ?Note
     {
        return $this->noteRepository->findById($id);
     }
 
+    /**
+     * @throws NotFound
+     */
     public function update(NoteDTO $noteDTO, int $id): void
     {
         $note = $this->noteRepository->findById($id);

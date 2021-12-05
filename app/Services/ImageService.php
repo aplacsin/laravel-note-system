@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Image;
 use App\Repositories\ImageRepositoryInterface;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use App\Enums\ImageDiskType;
 
 class ImageService
 {
@@ -17,21 +20,20 @@ class ImageService
 
     public function deleteById(int $id): void
     {
-        $imageName = $this->imageRepository->findById($id)->image;
+        $image = $this->imageRepository->findById($id);
         $this->imageRepository->removeById($id);
-        $path = public_path() . '/images/' . $imageName;
-        unlink($path);
+        Storage::disk(ImageDiskType::public()->label)->delete("images/$image->image");
     }
 
     public function create($file, int $noteId): void
     {
-        $name = $file->getClientOriginalName();
-        $fileName = 'file-' . Str::random(10) . '_' . $name;
-        $file->move(public_path() . '/images/', $fileName);
+        $storagePath = Storage::disk(ImageDiskType::public()->label)->put('images', $file);
+        $storageName = basename((string)$storagePath);
 
         $image = new Image();
         $image->note_id = $noteId;
-        $image->image = $fileName;
+        $image->image = $storageName;
+        $image->disk = ImageDiskType::public()->label;
 
         $this->imageRepository->save($image);
     }

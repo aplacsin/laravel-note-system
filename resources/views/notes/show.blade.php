@@ -34,9 +34,9 @@
                             @foreach($note->image as $img)
                             <div class="wrapper-image-show">
                                 <div class="image-show">
-                                    <figure><a href="{{ url('images/'.$img->image) }}" alt="{{ $img->image }}"
+                                    <figure><a href="{{ asset('storage/images/'.$img->image) }}" alt="{{ $img->image }}"
                                             title="{{ $img->image }}">
-                                            <img src="{{ url('images/'.$img->image)}}" alt="{{ $img->image }}">
+                                            <img src="{{ asset('storage/images/'.$img->image) }}" alt="{{ $img->image }}">
                                         </a></figure>
                                 </div>
                             </div>

@@ -17,6 +17,7 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->integer('note_id')->unsigned();
             $table->string('file');
+            $table->string('disk');
             $table->timestamps();
         });
 

@@ -42,7 +42,7 @@
                                         <option value="priority">{{ __('func.priority') }}</option>
                                         <option value="created_at">{{ __('func.created_at') }}</option>
                                     </select>
-                                    <select name="method_sort" class="form-control">
+                                    <select name="method" class="form-control">
                                         <option value="asc" selected>{{ __('func.asc') }}</option>
                                         <option value="desc">{{ __('func.desc') }}</option>
                                     </select>
@@ -100,7 +100,7 @@
                 @endif
             </div>
         </div>
-        {{--   {{ $tasks->links() }} --}}
+        {{ $tasks->links() }}
     </div>
 </div>
 </div>

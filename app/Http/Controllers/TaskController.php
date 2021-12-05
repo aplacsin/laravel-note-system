@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App;
 use App\Services\TaskService;
+use App\DTO\TaskDTO;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\FilterTaskRequest;
@@ -42,11 +45,13 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request): RedirectResponse
     {
-        $userId = Auth::id();
-        $task = $request->all();
-        $task['user_id'] = $userId;
+        $taskDTO = TaskDTO::make(
+            Auth::id(),
+            $request->getTitle(),
+            $request->getPriority(),
+        );
 
-        $this->taskService->create($task);
+        $this->taskService->create($taskDTO);
 
         return redirect()->route('tasks.index', app()->getLocale())
                         ->with('success', trans('alert.success_created_task'));

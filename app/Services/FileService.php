@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
+use App\Enums\FileDiskType;
 use App\Models\File;
 use App\Repositories\FileRepositoryInterface;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
@@ -17,21 +20,20 @@ class FileService
 
     public function deleteById(int $id): void
     {
-        $fileName = $this->fileRepository->findByID($id)->file;
+        $file = $this->fileRepository->findByID($id);
         $this->fileRepository->removeById($id);
-        $path = public_path().'/files/'.$fileName;
-        unlink($path);
+        Storage::disk(FileDiskType::public()->label)->delete("files/$file->file");
     }
 
     public function create($file, int $noteId): void
     {
-        $name = $file->getClientOriginalName();
-        $fileName = 'file-'.Str::random(10).'_'.$name;
-        $file->move(public_path().'/files/', $fileName);
+        $storagePath = Storage::disk(FileDiskType::public()->label)->put('files', $file);
+        $storageName = basename((string)$storagePath);
 
         $file = new File();
         $file->note_id = $noteId;
-        $file->file = $fileName;
+        $file->file = $storageName;
+        $file->disk = FileDiskType::public()->label;
 
         $this->fileRepository->save($file);
     }

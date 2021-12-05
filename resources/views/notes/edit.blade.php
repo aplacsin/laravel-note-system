@@ -60,7 +60,7 @@
 
                         <div class="wrapper-image-edit">
                             <div class="image-edit" id="image-edit">
-                                <img src="{{ url('images/'.$img->image)}}" alt="{{ $img->image }}">
+                                <img src="{{ asset('storage/images/'.$img->image) }}" alt="{{ $img->image }}">
                             </div>
                             <div class="btn-edit-delete">
                                 <button class="btn btn-danger edit-delete edit-image-delete"

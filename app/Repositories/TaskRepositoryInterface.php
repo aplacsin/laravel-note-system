@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Task;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 interface TaskRepositoryInterface
 {
@@ -14,7 +13,7 @@ interface TaskRepositoryInterface
 
     public function findById(int $id);
 
-    public function list(array $filter): Collection;
+    public function list(array $filter): LengthAwarePaginator;
 
     public function findCompleteByUserId(int $userId): LengthAwarePaginator;
 }
